@@ -1201,6 +1201,25 @@ body.narrative-v7 .slide-lead{max-width:1436px;}
 .rap-role-art { width:100%;height:370px;display:block; }
 @media print { .rap-intro-scene > .rap-intro-focus { stroke:#e2e8f0!important; } }
 </style>
+<style id="text-image-step-focus">
+#deck-stage .image-step-focus {
+  position:absolute;box-sizing:border-box!important;pointer-events:none;z-index:2;
+  border:2px solid transparent!important;border-radius:4px;
+  background:transparent!important;box-shadow:none!important;filter:none!important;
+  opacity:0!important;transition:opacity .15s ease!important;
+}
+#deck-stage .image-step-focus.is-current {opacity:1!important;border-color:#4f46e5!important;}
+#deck-stage .vector-step-focus {fill:transparent;stroke:transparent;stroke-width:2;vector-effect:non-scaling-stroke;}
+#deck-stage .vector-step-focus.is-current {stroke:#4f46e5;}
+@media (prefers-reduced-motion:reduce) {
+  #deck-stage .image-step-focus {transition:none!important;}
+}
+@media print {
+  #deck-stage .image-step-focus,#deck-stage .image-step-focus.is-current {
+    display:none!important;border-color:transparent!important;stroke:transparent!important;
+  }
+}
+</style>
 </head>
 <body class="narrative-v7" data-appendix-start="28" data-main-count="27">
 <div id="stage-wrapper">
@@ -2007,9 +2026,93 @@ document.querySelectorAll('.algo-walkthrough').forEach((root,index)=>{
 });
 
 
+
+// Couple explanatory steps to authored locations in the original figures.
+const imageFocusDefinitions={"5":{"regions":[[0,14,34,47,15,"1"],[0,64,43,25,17,"1,2"],[0,63,82,28,16,"3"]]},"6":{"regions":[[0,7,21,72,8,"1"],[0,78,29,16,14,"1"],[0,7,40,72,8,"2"],[0,78,48,16,14,"2"],[0,7,60,72,8,"3"],[0,78,67,16,15,"3"],[0,7,79,72,8,"4"],[0,78,86,16,12,"4"]]},"22":{"regions":[[0,14,22,72,36,"1"],[0,14,60,72,35,"2"]]}};
+const imageFocusImages=new WeakMap(),imageFocusGroups=[];
+Object.entries(imageFocusDefinitions).forEach(([number,definition])=>{
+  const slide=slides.find(s=>Number(s.dataset.page)===Number(number));
+  if(!slide)return;
+  const images=Array.from(slide.querySelectorAll('img'));
+  const vectors=Array.from(slide.querySelectorAll('svg')).filter(e=>!e.closest('.latex-source,.katex,button,.nav-btn'));
+  const targets=[];
+  (definition.regions||[]).forEach(([index,x,y,w,h,steps])=>{
+    const image=images[index];if(!image)return;
+    const parent=image.parentElement;
+    if(getComputedStyle(parent).position==='static')parent.style.position='relative';
+    const element=document.createElement('span');
+    element.className='paper-region image-step-focus';
+    element.dataset.visualStep=steps;element.setAttribute('aria-hidden','true');
+    element.style.cssText=`left:${x}%;top:${y}%;width:${w}%;height:${h}%;`;
+    imageFocusImages.set(element,image);parent.append(element);
+    targets.push({element,steps:steps.split(',').map(Number)});
+  });
+  (definition.vectors||[]).forEach(([index,x,y,w,h,steps])=>{
+    const svg=vectors[index];if(!svg)return;
+    const box=svg.viewBox.baseVal;
+    const element=document.createElementNS('http://www.w3.org/2000/svg','rect');
+    element.setAttribute('class','image-step-focus vector-step-focus');
+    element.setAttribute('x',box.x+x*box.width/100);element.setAttribute('y',box.y+y*box.height/100);
+    element.setAttribute('width',w*box.width/100);element.setAttribute('height',h*box.height/100);
+    element.setAttribute('rx','2');element.setAttribute('aria-hidden','true');
+    element.dataset.visualStep=steps;svg.append(element);
+    targets.push({element,steps:steps.split(',').map(Number)});
+  });
+  const swaps=definition.swaps||{};
+  const originals=new Map();
+  Object.values(swaps).forEach(swap=>{
+    const image=images[swap.image];if(!image||originals.has(image))return;
+    const caption=image.parentElement.querySelector('.fig-cap');
+    originals.set(image,{source:image.src,ref:image.dataset.figureRef,style:image.getAttribute('style'),
+      alt:image.alt,label:`放大图片：${image.alt||'论文截图'}`,caption,html:caption?.innerHTML});
+  });
+  imageFocusGroups.push({slide,targets,swaps,images,originals});
+});
+function syncImageFocusSources(group,step){
+  const selected=group.swaps[step];
+  group.originals.forEach((original,image)=>{
+    const swap=selected&&group.images[selected.image]===image?selected:null;
+    const source=swap?embeddedFigureViews.get(swap.ref):original.source;
+    if(!source||image.src===source)return;
+    if(swap){
+      const scale=stage.getBoundingClientRect().width/1600;
+      const box=image.getBoundingClientRect();
+      image.style.setProperty('width',`${box.width/scale}px`,'important');
+      image.style.setProperty('height',`${box.height/scale}px`,'important');
+      image.style.setProperty('object-fit','contain','important');
+      image.alt=swap.caption;image.dataset.figureRef=swap.ref;
+      if(original.caption)original.caption.textContent=swap.caption;
+      image.setAttribute('aria-label',`放大图片：${swap.caption}`);
+    }else{
+      if(original.style===null)image.removeAttribute('style');else image.setAttribute('style',original.style);
+      image.alt=original.alt;image.dataset.figureRef=original.ref;
+      if(original.caption)original.caption.innerHTML=original.html;
+      if(original.label===null)image.removeAttribute('aria-label');else image.setAttribute('aria-label',original.label);
+    }
+    image.src=source;
+  });
+}
+function syncImageStepFocus(root,step){
+  imageFocusGroups.filter(group=>group.slide===root.closest('.slide')).forEach(group=>{
+    syncImageFocusSources(group,step);
+    group.targets.forEach(({element,steps})=>{
+      element.classList.toggle('is-current',step>0&&steps.includes(step));
+      element.classList.toggle('is-complete',step>0&&steps.some(i=>i<step));
+    });
+  });
+}
+window.addEventListener('beforeprint',()=>{
+  algoPlayers.forEach(p=>p.pause());
+  imageFocusGroups.forEach(group=>syncImageFocusSources(group,0));
+});
+window.addEventListener('afterprint',()=>{
+  visualPlayers.forEach(p=>syncImageStepFocus(p.root,p.step));
+  scheduleAnimationFocus();
+});
+
 // Image regions use percentages of the painted image, not its surrounding box.
 const animationRegions=Array.from(document.querySelectorAll('.paper-region,.paper-focus')).map(element=>({
-  element,image:element.parentElement.querySelector('img'),
+  element,image:imageFocusImages.get(element)||element.parentElement.querySelector('img'),
   rect:['left','top','width','height'].map(key=>parseFloat(element.style[key])/100)
 }));
 function animationImageBounds(image){
@@ -2037,6 +2140,7 @@ function animationImageBounds(image){
 function alignAnimationRegions(slide){
   animationRegions.filter(r=>slide.contains(r.element)).forEach(({element,image,rect})=>{
     if(!image)return;
+    if(element.classList.contains('image-step-focus'))element.style.visibility=image.complete?'':'hidden';
     const bounds=animationImageBounds(image);
     if(!bounds)return;
     const parent=element.offsetParent;
@@ -2145,6 +2249,7 @@ document.querySelectorAll('.visual-sequence').forEach(root=>{
   const total=Math.max(notes.length,...ids,0);if(!total)return;
   let current=0,timer=null;
   function render(){
+    syncImageStepFocus(root,current);
     root.dataset.currentStep=String(current);
     root.classList.toggle('sequence-active',current>0);
     nodes.forEach(el=>{

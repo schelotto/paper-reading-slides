@@ -995,6 +995,25 @@ SOFTWARE.
   }
 }
 </style>
+<style id="text-image-step-focus">
+#deck-stage .image-step-focus {
+  position:absolute;box-sizing:border-box!important;pointer-events:none;z-index:2;
+  border:2px solid transparent!important;border-radius:4px;
+  background:transparent!important;box-shadow:none!important;filter:none!important;
+  opacity:0!important;transition:opacity .15s ease!important;
+}
+#deck-stage .image-step-focus.is-current {opacity:1!important;border-color:#4f46e5!important;}
+#deck-stage .vector-step-focus {fill:transparent;stroke:transparent;stroke-width:2;vector-effect:non-scaling-stroke;}
+#deck-stage .vector-step-focus.is-current {stroke:#4f46e5;}
+@media (prefers-reduced-motion:reduce) {
+  #deck-stage .image-step-focus {transition:none!important;}
+}
+@media print {
+  #deck-stage .image-step-focus,#deck-stage .image-step-focus.is-current {
+    display:none!important;border-color:transparent!important;stroke:transparent!important;
+  }
+}
+</style>
 </head>
 <body class="narrative-v7 voyager-deck" data-main-count="25" data-appendix-start="26"><div id="stage-wrapper"><div id="deck-stage"><section class="slide story-core vo-slide cover-slide" data-page="1" data-section="main" data-title="01. VOYAGER: An Open-Ended Embodied Agent with Large Language Models"><div class="slide-top"><span class="chapter-tag">R18 · 论文精读 · Voyager</span><span class="slide-index">01 / 25 正文</span></div><div class="story-heading"><h1 class="slide-title">VOYAGER: An Open-Ended Embodied Agent with Large Language Models</h1><p class="paper-topic">在开放环境中探索，并积累可检索、可组合的程序技能</p><p class="paper-authors" aria-label="论文作者">Guanzhi Wang <span aria-hidden="true">·</span> Yuqi Xie <span aria-hidden="true">·</span> Yunfan Jiang <span aria-hidden="true">·</span> Ajay Mandlekar <span aria-hidden="true">·</span> Chaowei Xiao <span aria-hidden="true">·</span> Yuke Zhu <span aria-hidden="true">·</span> Linxi “Jim” Fan <span aria-hidden="true">·</span> Anima Anandkumar</p><p class="slide-lead">Minecraft 这样的开放三维世界没有固定终点。传统强化学习和固定目标规划，很难一边探索未知，一边长期积累可复用技能。Voyager 用大模型驱动具身终身学习，不更新模型权重，主要依靠三个组件：自动课程（Automatic Curriculum）持续选择能推进探索的任务；持久化技能库（Skill Library）保存并检索可执行动作代码；迭代提示（Iterative Prompting）结合环境观察、执行报错和自我校验，不断修改程序。</p></div><div class="slide-body"><div class="grid-3 story-split" style="height:290px;flex:0 0 290px;"><div class="card indigo"><div class="card-title"><span class="badge badge-indigo">问题</span><span>没有固定终点，接下来该做什么？</span></div><p>科技树庞大，地形又不断变化，没有由易到难的目标引导，智能体容易原地打转。每次都从头生成底层控制指令，却不把学会的合成、采集能力存成可组合程序，也难完成更长链条的任务。</p></div><div class="card emerald"><div class="card-title"><span class="badge badge-emerald">方法</span><span>自动选任务，把成功代码存成技能</span></div><p>自动课程根据物品栏和世界状态，提出“跳一跳够得着”的任务。验证通过的 Mineflayer 代码连同功能描述向量存入技能库，供后续任务组合调用；生成程序时结合环境状态、JS 报错与 GPT-4 自校验，最多修改 4 轮。</p></div><div class="card warm"><div class="card-title"><span class="badge badge-amber">证据与边界</span><span>探索更广，旧技能还能迁移复用</span></div><p>相同提示轮次下，相较 ReAct、Reflexion 与 AutoGPT，独特物品数达到对照的 3.3 倍，地图跨越距离达到 2.3 倍，解锁木制至钻石工具全套科技树的速度最高达到 15.3 倍。冻结后的技能库，也能零样本迁移到新世界的未见任务。</p></div></div><div class="paper-reference"><a href="https://arxiv.org/abs/2305.16291v2" target="_blank" rel="noopener noreferrer">论文原文 ↗</a><span>原始图表与补充材料见附录。</span></div></div></section>
 <section class="slide story-core vo-slide" data-page="2" data-section="main" data-title="02. 阅读路线：从问题到方法，再核对证据"><div class="slide-top"><span class="chapter-tag">阅读路线</span><span class="slide-index">02 / 25 正文</span></div><div class="story-heading"><h2 class="slide-title">阅读路线：从问题到方法，再核对证据</h2><p class="slide-lead">五个部分串起本文的实例、机制与实验；点击任一行可跳到对应正文，原始图表与补充细节保留在附录。</p></div><div class="slide-body"><nav class="route-map" aria-label="正文阅读路线"><a class="route-row" href="#s3" data-slide-target="3"><span class="route-number">01</span><span class="route-content"><strong>问题：知道配方为什么还做不出铁镐？</strong><span class="route-description">从配方与现场状态的差距，走向课程、执行与技能积累。</span></span><span class="route-range">P03–P05</span></a><a class="route-row" href="#s6" data-slide-target="6"><span class="route-number">02</span><span class="route-content"><strong>尝试：怎样选择任务并运行程序？</strong><span class="route-description">检查课程读取的信息、代码执行、环境日志与错误修正。</span></span><span class="route-range">P06–P10</span></a><a class="route-row" href="#s11" data-slide-target="11"><span class="route-number">03</span><span class="route-content"><strong>积累：怎样核验、存储和复用技能？</strong><span class="route-description">沿望远镜、铁镐检索与采石程序串起技能描述和交互算法。</span></span><span class="route-range">P11–P16</span></a><a class="route-row" href="#s17" data-slide-target="17"><span class="route-number">04</span><span class="route-content"><strong>实验：四种能力分别怎样测量？</strong><span class="route-description">区分物品发现、工具进阶、地图距离与新世界任务的指标和预算。</span></span><span class="route-range">P17–P21</span></a><a class="route-row" href="#s22" data-slide-target="22"><span class="route-number">05</span><span class="route-content"><strong>边界：哪些能力仍依赖反馈与设置？</strong><span class="route-description">结合消融、人工指导与局限，不把建筑演示当自主视觉能力。</span></span><span class="route-range">P22–P25</span></a></nav></div></section>
@@ -1230,9 +1249,93 @@ document.querySelectorAll('.algo-walkthrough').forEach((root,index)=>{
 });
 
 
+
+// Couple explanatory steps to authored locations in the original figures.
+const imageFocusDefinitions={"3":{"regions":[[0,30,15,20,50,"1"],[0,30,66,20,26,"2"],[0,83,17,16,74,"3"]]},"4":{"regions":[[0,13,4,86,43,"1"],[0,13,53,86,45,"2"]]},"5":{"regions":[[0,2,1,31,79,"1"],[0,37,1,35,61,"2"],[0,74,1,24,68,"3"]]},"6":{"regions":[[0,13,4,26,87,"1"]]},"7":{"regions":[[0,1,10,98,38,"1"],[0,1,62,98,36,"2"]]},"9":{"regions":[[0,1,51,98,32,"1"],[1,1,46,98,51,"2"]]},"11":{"regions":[[0,55,6,44,41,"1"],[0,41,25,58,71,"2"]]},"12":{"regions":[[0,30,14,20,78,"1"],[0,83,17,16,74,"2"]]},"13":{"regions":[[0,1,1,98,20,"1"],[0,1,52,98,44,"1"],[0,1,20,98,61,"2"]]},"14":{"regions":[[0,1,43,98,31,"1"],[0,1,10,98,32,"2"]]},"15":{"regions":[[0,5,22,58,37,"2"],[0,5,33,58,14,"3"]]},"18":{"regions":[[0,48,6,51,44,"1"],[0,48,46,51,13,"2"]]},"19":{"regions":[[0,1,23,98,27,"1"],[0,1,51,98,14,"2"],[0,1,66,98,14,"3"],[0,1,81,98,17,"4"]]},"20":{"regions":[[0,2,2,47,86,"1"],[0,50,2,48,86,"2"]]},"21":{"regions":[[0,1,48,98,13,"1"],[0,1,61,98,13,"2"],[0,1,74,98,13,"3"],[0,1,87,98,12,"4"]]},"22":{"regions":[[0,15,48,82,18,"1"],[0,15,64,82,6,"1"],[0,50,2,47,37,"2"],[0,50,34,47,10,"2"]]},"23":{"regions":[[0,48,44,48,8,"1"],[0,48,3,48,32,"1"]]},"24":{"regions":[[0,16,2,83,45,"1"]]}};
+const imageFocusImages=new WeakMap(),imageFocusGroups=[];
+Object.entries(imageFocusDefinitions).forEach(([number,definition])=>{
+  const slide=slides.find(s=>Number(s.dataset.page)===Number(number));
+  if(!slide)return;
+  const images=Array.from(slide.querySelectorAll('img'));
+  const vectors=Array.from(slide.querySelectorAll('svg')).filter(e=>!e.closest('.latex-source,.katex,button,.nav-btn'));
+  const targets=[];
+  (definition.regions||[]).forEach(([index,x,y,w,h,steps])=>{
+    const image=images[index];if(!image)return;
+    const parent=image.parentElement;
+    if(getComputedStyle(parent).position==='static')parent.style.position='relative';
+    const element=document.createElement('span');
+    element.className='paper-region image-step-focus';
+    element.dataset.visualStep=steps;element.setAttribute('aria-hidden','true');
+    element.style.cssText=`left:${x}%;top:${y}%;width:${w}%;height:${h}%;`;
+    imageFocusImages.set(element,image);parent.append(element);
+    targets.push({element,steps:steps.split(',').map(Number)});
+  });
+  (definition.vectors||[]).forEach(([index,x,y,w,h,steps])=>{
+    const svg=vectors[index];if(!svg)return;
+    const box=svg.viewBox.baseVal;
+    const element=document.createElementNS('http://www.w3.org/2000/svg','rect');
+    element.setAttribute('class','image-step-focus vector-step-focus');
+    element.setAttribute('x',box.x+x*box.width/100);element.setAttribute('y',box.y+y*box.height/100);
+    element.setAttribute('width',w*box.width/100);element.setAttribute('height',h*box.height/100);
+    element.setAttribute('rx','2');element.setAttribute('aria-hidden','true');
+    element.dataset.visualStep=steps;svg.append(element);
+    targets.push({element,steps:steps.split(',').map(Number)});
+  });
+  const swaps=definition.swaps||{};
+  const originals=new Map();
+  Object.values(swaps).forEach(swap=>{
+    const image=images[swap.image];if(!image||originals.has(image))return;
+    const caption=image.parentElement.querySelector('.fig-cap');
+    originals.set(image,{source:image.src,ref:image.dataset.figureRef,style:image.getAttribute('style'),
+      alt:image.alt,label:`放大图片：${image.alt||'论文截图'}`,caption,html:caption?.innerHTML});
+  });
+  imageFocusGroups.push({slide,targets,swaps,images,originals});
+});
+function syncImageFocusSources(group,step){
+  const selected=group.swaps[step];
+  group.originals.forEach((original,image)=>{
+    const swap=selected&&group.images[selected.image]===image?selected:null;
+    const source=swap?embeddedFigureViews.get(swap.ref):original.source;
+    if(!source||image.src===source)return;
+    if(swap){
+      const scale=stage.getBoundingClientRect().width/1600;
+      const box=image.getBoundingClientRect();
+      image.style.setProperty('width',`${box.width/scale}px`,'important');
+      image.style.setProperty('height',`${box.height/scale}px`,'important');
+      image.style.setProperty('object-fit','contain','important');
+      image.alt=swap.caption;image.dataset.figureRef=swap.ref;
+      if(original.caption)original.caption.textContent=swap.caption;
+      image.setAttribute('aria-label',`放大图片：${swap.caption}`);
+    }else{
+      if(original.style===null)image.removeAttribute('style');else image.setAttribute('style',original.style);
+      image.alt=original.alt;image.dataset.figureRef=original.ref;
+      if(original.caption)original.caption.innerHTML=original.html;
+      if(original.label===null)image.removeAttribute('aria-label');else image.setAttribute('aria-label',original.label);
+    }
+    image.src=source;
+  });
+}
+function syncImageStepFocus(root,step){
+  imageFocusGroups.filter(group=>group.slide===root.closest('.slide')).forEach(group=>{
+    syncImageFocusSources(group,step);
+    group.targets.forEach(({element,steps})=>{
+      element.classList.toggle('is-current',step>0&&steps.includes(step));
+      element.classList.toggle('is-complete',step>0&&steps.some(i=>i<step));
+    });
+  });
+}
+window.addEventListener('beforeprint',()=>{
+  algoPlayers.forEach(p=>p.pause());
+  imageFocusGroups.forEach(group=>syncImageFocusSources(group,0));
+});
+window.addEventListener('afterprint',()=>{
+  visualPlayers.forEach(p=>syncImageStepFocus(p.root,p.step));
+  scheduleAnimationFocus();
+});
+
 // Image regions use percentages of the painted image, not its surrounding box.
 const animationRegions=Array.from(document.querySelectorAll('.paper-region,.paper-focus')).map(element=>({
-  element,image:element.parentElement.querySelector('img'),
+  element,image:imageFocusImages.get(element)||element.parentElement.querySelector('img'),
   rect:['left','top','width','height'].map(key=>parseFloat(element.style[key])/100)
 }));
 function animationImageBounds(image){
@@ -1260,6 +1363,7 @@ function animationImageBounds(image){
 function alignAnimationRegions(slide){
   animationRegions.filter(r=>slide.contains(r.element)).forEach(({element,image,rect})=>{
     if(!image)return;
+    if(element.classList.contains('image-step-focus'))element.style.visibility=image.complete?'':'hidden';
     const bounds=animationImageBounds(image);
     if(!bounds)return;
     const parent=element.offsetParent;
@@ -1368,6 +1472,7 @@ document.querySelectorAll('.visual-sequence').forEach(root=>{
   const total=Math.max(notes.length,...ids,0);if(!total)return;
   let current=0,timer=null;
   function render(){
+    syncImageStepFocus(root,current);
     root.dataset.currentStep=String(current);
     root.classList.toggle('sequence-active',current>0);
     nodes.forEach(el=>{

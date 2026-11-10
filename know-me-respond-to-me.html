@@ -1147,6 +1147,25 @@ body.narrative-v7 .story-core[data-page="25"] .e-note { padding:9px 15px; }
 .km-prompt-index .data-table td:first-child { font-weight:650;color:#334155; }
 .km-prompt-index .data-table a { font-size:16px; }
 </style>
+<style id="text-image-step-focus">
+#deck-stage .image-step-focus {
+  position:absolute;box-sizing:border-box!important;pointer-events:none;z-index:2;
+  border:2px solid transparent!important;border-radius:4px;
+  background:transparent!important;box-shadow:none!important;filter:none!important;
+  opacity:0!important;transition:opacity .15s ease!important;
+}
+#deck-stage .image-step-focus.is-current {opacity:1!important;border-color:#4f46e5!important;}
+#deck-stage .vector-step-focus {fill:transparent;stroke:transparent;stroke-width:2;vector-effect:non-scaling-stroke;}
+#deck-stage .vector-step-focus.is-current {stroke:#4f46e5;}
+@media (prefers-reduced-motion:reduce) {
+  #deck-stage .image-step-focus {transition:none!important;}
+}
+@media print {
+  #deck-stage .image-step-focus,#deck-stage .image-step-focus.is-current {
+    display:none!important;border-color:transparent!important;stroke:transparent!important;
+  }
+}
+</style>
 </head>
 <body class="narrative-v7" data-appendix-start="30" data-main-count="29">
 <div id="stage-wrapper">
@@ -1197,20 +1216,20 @@ body.narrative-v7 .story-core[data-page="25"] .e-note { padding:9px 15px; }
 <p>评测 16 个前沿模型时，长窗口直塞在隐式、演化偏好上的准确率为 37%–48%，常规 RAG 为 32%–38%。经 GRPO 训练的 Qwen3-4B，用不足 2K 上下文达到 55.3%，高于全量窗口，推理开销减少逾 90%。</p>
 </div>
 </div><div class="paper-reference"><a href="https://arxiv.org/abs/2504.14225v2" rel="noopener noreferrer" target="_blank">论文原文 ↗</a><span>原始图表与补充材料见附录。</span></div></div>
-</section><section class="slide story-core" data-page="2" data-section="main" data-title="02. 阅读路线：从问题到方法，再核对证据"><div class="slide-top"><span class="chapter-tag">阅读路线</span><span class="slide-index">02 / 29 正文</span></div><div class="story-heading"><h2 class="slide-title">阅读路线：从问题到方法，再核对证据</h2><p class="slide-lead">五个部分串起本文的实例、机制与实验；点击任一行可跳到对应正文，原始图表与补充细节保留在附录。</p></div><div class="slide-body"><nav aria-label="正文阅读路线" class="route-map"><a class="route-row" data-slide-target="3" href="#s3"><span class="route-number">01</span><span class="route-content"><strong>问题：记住历史为何不等于贴合偏好？</strong><span class="route-description">用动态用户画像实例建立基准任务与相关工作的区分。</span></span><span class="route-range">P03–P08</span></a><a class="route-row" data-slide-target="9" href="#s9"><span class="route-number">02</span><span class="route-content"><strong>题型：七类第一人称原位询问</strong><span class="route-description">区分事实回忆、演化追踪、主动对齐与跨场景迁移。</span></span><span class="route-range">P09–P12</span></a><a class="route-row" data-slide-target="13" href="#s13"><span class="route-number">03</span><span class="route-content"><strong>评测：画像、会话与问题怎样生成？</strong><span class="route-description">检查数据构造、任务设置与评测流程。</span></span><span class="route-range">P13–P18</span></a><a class="route-row" data-slide-target="19" href="#s19"><span class="route-number">04</span><span class="route-content"><strong>实验：模型、上下文与外部记忆</strong><span class="route-description">核对历史长度、信息位置、生成表现与错误分类。</span></span><span class="route-range">P19–P25</span></a><a class="route-row" data-slide-target="26" href="#s26"><span class="route-number">05</span><span class="route-content"><strong>边界：动态偏好与个性化回应</strong><span class="route-description">把找回事实、推断偏好和选择回答分开总结。</span></span><span class="route-range">P26–P29</span></a></nav></div></section><section class="slide story-core opening-visual" data-page="3" data-section="main" data-title="03. 能说出我的偏好，为什么建议时却忘了用？"><div class="slide-top">
+</section><section class="slide story-core" data-page="2" data-section="main" data-title="02. 阅读路线：从问题到方法，再核对证据"><div class="slide-top"><span class="chapter-tag">阅读路线</span><span class="slide-index">02 / 29 正文</span></div><div class="story-heading"><h2 class="slide-title">阅读路线：从问题到方法，再核对证据</h2><p class="slide-lead">五个部分串起本文的实例、机制与实验；点击任一行可跳到对应正文，原始图表与补充细节保留在附录。</p></div><div class="slide-body"><nav aria-label="正文阅读路线" class="route-map"><a class="route-row" data-slide-target="3" href="#s3"><span class="route-number">01</span><span class="route-content"><strong>问题：记住历史为何不等于贴合偏好？</strong><span class="route-description">用动态用户画像实例建立基准任务与相关工作的区分。</span></span><span class="route-range">P03–P08</span></a><a class="route-row" data-slide-target="9" href="#s9"><span class="route-number">02</span><span class="route-content"><strong>题型：七类第一人称原位询问</strong><span class="route-description">区分事实回忆、演化追踪、主动对齐与跨场景迁移。</span></span><span class="route-range">P09–P12</span></a><a class="route-row" data-slide-target="13" href="#s13"><span class="route-number">03</span><span class="route-content"><strong>评测：画像、会话与问题怎样生成？</strong><span class="route-description">检查数据构造、任务设置与评测流程。</span></span><span class="route-range">P13–P18</span></a><a class="route-row" data-slide-target="19" href="#s19"><span class="route-number">04</span><span class="route-content"><strong>实验：模型、上下文与外部记忆</strong><span class="route-description">核对历史长度、信息位置、生成表现与错误分类。</span></span><span class="route-range">P19–P25</span></a><a class="route-row" data-slide-target="26" href="#s26"><span class="route-number">05</span><span class="route-content"><strong>边界：动态偏好与个性化回应</strong><span class="route-description">把找回事实、推断偏好和选择回答分开总结。</span></span><span class="route-range">P26–P29</span></a></nav></div></section><section class="slide story-core opening-visual" data-page="3" data-section="main" data-title="03. 同一个用户，为什么不能一直推荐披萨？"><div class="slide-top">
 <span class="chapter-tag">第一章 · 动态用户画像问题与问题定义</span>
 <span class="slide-index">03 / 29 正文</span>
-</div><div class="story-heading"><h2 class="slide-title">能说出我的偏好，为什么建议时却忘了用？</h2><p class="slide-lead">用户不会每次都提醒自己的限制。PersonaMem 要检查：助手能否在自然提问中主动用上历史画像。</p></div><div class="slide-body"><svg class="opening-art" viewBox="0 0 1400 440" role="img" aria-label="同一条无麸质偏好：显式提问能答对，晚餐建议却可能用错。教学示意。" xmlns="http://www.w3.org/2000/svg"><title>同一条无麸质偏好：显式提问能答对，晚餐建议却可能用错。教学示意。</title><defs><marker id="ov-arrow-know-me-respond-to-me-3" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto-start-reverse"><path d="M0 0L8 4L0 8Z" fill="context-stroke"/></marker></defs><rect x="410" y="8" width="580" height="66" rx="18" fill="#fffbeb" stroke="#fde68a" stroke-width="1.5" /><text x="700" y="50" font-size="25" fill="#b45309" font-weight="700" text-anchor="middle"><tspan x="700" dy="0">同一条已知偏好：现在只吃无麸质食物</tspan></text><rect x="30" y="112" width="640" height="308" rx="18" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" /><text x="58" y="153" font-size="25" fill="#4f46e5" font-weight="700" text-anchor="start"><tspan x="58" dy="0">显式问答：问题已点明要查什么</tspan></text><rect x="58" y="181" width="584" height="68" rx="12" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5" /><text x="82" y="224" font-size="27" fill="#0f172a" font-weight="500" text-anchor="start"><tspan x="82" dy="0">“我现在有什么饮食限制？”</tspan></text><text x="58" y="286" font-size="20" fill="#64748b" font-weight="500" text-anchor="start"><tspan x="58" dy="0">助手回复</tspan></text><rect x="58" y="305" width="584" height="72" rx="12" fill="#eef2ff" stroke="#eef2ff" stroke-width="1.5" /><text x="82" y="350" font-size="27" fill="#4f46e5" font-weight="650" text-anchor="start"><tspan x="82" dy="0">“你现在只吃无麸质食物。”</tspan></text><rect x="730" y="112" width="640" height="308" rx="18" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" /><text x="758" y="153" font-size="25" fill="#be123c" font-weight="700" text-anchor="start"><tspan x="758" dy="0">原位提问：用户不再提醒一次</tspan></text><rect x="758" y="181" width="584" height="68" rx="12" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5" /><text x="782" y="224" font-size="27" fill="#0f172a" font-weight="500" text-anchor="start"><tspan x="782" dy="0">“今晚做什么菜？”</tspan></text><text x="758" y="286" font-size="20" fill="#64748b" font-weight="500" text-anchor="start"><tspan x="758" dy="0">助手回复</tspan></text><rect x="758" y="305" width="584" height="72" rx="12" fill="#fff1f2" stroke="#fff1f2" stroke-width="1.5" /><text x="782" y="350" font-size="27" fill="#be123c" font-weight="650" text-anchor="start"><tspan x="782" dy="0">“试试普通小麦意面吧。”</tspan></text><line x1="782" y1="345" x2="1112" y2="345" stroke="#be123c" stroke-width="2" /></svg><div class="opening-conclusion">记得住，是问起时能找回；用得上，是不提醒也能据此回答。</div><div class="opening-source">来源：§1、§2；对话为教学示意。完整题型见 <a class="appendix-link" data-slide-target="32" href="#slide-32">附录 A02</a>；评测结果留在实验章节。</div></div></section><section class="slide story-core opening-visual" data-page="4" data-section="main" data-title="04. 只记最新偏好，也会丢掉问题的答案"><div class="slide-top">
+</div><div class="story-heading"><h2 class="slide-title">同一个用户，为什么不能一直推荐披萨？</h2><p class="slide-lead">先沿时间线看同一位用户：早期喜欢披萨，后来透露麸质过敏并改变饮食。当前状态要更新，旧偏好与变化原因也要保留。</p></div><div class="slide-body"><svg class="opening-art" viewBox="0 0 1400 440" role="img" aria-label="同一用户从喜欢披萨，到透露麸质过敏，再到需要晚餐建议；保留早期记录、变化原因与当前限制。教学示意。" xmlns="http://www.w3.org/2000/svg"><title>同一用户从喜欢披萨，到透露麸质过敏，再到需要晚餐建议；保留早期记录、变化原因与当前限制。教学示意。</title><defs><marker id="ov-arrow-know-me-respond-to-me-3" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto-start-reverse"><path d="M0 0L8 4L0 8Z" fill="context-stroke"/></marker></defs><line x1="160" y1="92" x2="1240" y2="92" stroke="#cbd5e1" stroke-width="4" /><circle cx="230" cy="92" r="10" fill="#4f46e5" stroke="none" stroke-width="2"/><text x="230" y="55" font-size="24" fill="#4f46e5" font-weight="700" text-anchor="middle"><tspan x="230" dy="0">Session 2</tspan></text><rect x="40" y="122" width="380" height="149" rx="18" fill="#eef2ff" stroke="#eef2ff" stroke-width="1.5" /><text x="230" y="179" font-size="26" fill="#4f46e5" font-weight="700" text-anchor="middle"><tspan x="230" dy="0">喜欢意大利菜、披萨</tspan></text><text x="230" y="230" font-size="22" fill="#64748b" font-weight="500" text-anchor="middle"><tspan x="230" dy="0">这是当时的真实偏好</tspan></text><circle cx="700" cy="92" r="10" fill="#b45309" stroke="none" stroke-width="2"/><text x="700" y="55" font-size="24" fill="#b45309" font-weight="700" text-anchor="middle"><tspan x="700" dy="0">Session 12</tspan></text><rect x="510" y="122" width="380" height="149" rx="18" fill="#fffbeb" stroke="#fffbeb" stroke-width="1.5" /><text x="700" y="179" font-size="26" fill="#b45309" font-weight="700" text-anchor="middle"><tspan x="700" dy="0">透露麸质过敏</tspan></text><text x="700" y="230" font-size="22" fill="#64748b" font-weight="500" text-anchor="middle"><tspan x="700" dy="0">改吃地中海烤海鲜</tspan></text><circle cx="1170" cy="92" r="10" fill="#059669" stroke="none" stroke-width="2"/><text x="1170" y="55" font-size="24" fill="#059669" font-weight="700" text-anchor="middle"><tspan x="1170" dy="0">Session 20</tspan></text><rect x="980" y="122" width="380" height="149" rx="18" fill="#ecfdf5" stroke="#ecfdf5" stroke-width="1.5" /><text x="1170" y="179" font-size="26" fill="#059669" font-weight="700" text-anchor="middle"><tspan x="1170" dy="0">现在需要晚餐建议</tspan></text><text x="1170" y="230" font-size="22" fill="#64748b" font-weight="500" text-anchor="middle"><tspan x="1170" dy="0">新建议要避开麸质</tspan></text><text x="45" y="332" font-size="25" fill="#0f172a" font-weight="700" text-anchor="start"><tspan x="45" dy="0">保留早期记录</tspan></text><text x="45" y="379" font-size="23" fill="#4f46e5" font-weight="500" text-anchor="start"><tspan x="45" dy="0">喜欢披萨，是过去的状态</tspan></text><text x="520" y="332" font-size="25" fill="#0f172a" font-weight="700" text-anchor="start"><tspan x="520" dy="0">保留变化原因</tspan></text><text x="520" y="379" font-size="23" fill="#b45309" font-weight="500" text-anchor="start"><tspan x="520" dy="0">过敏，解释了饮食变化</tspan></text><text x="995" y="332" font-size="25" fill="#0f172a" font-weight="700" text-anchor="start"><tspan x="995" dy="0">更新当前限制</tspan></text><text x="995" y="379" font-size="23" fill="#059669" font-weight="500" text-anchor="start"><tspan x="995" dy="0">不能继续推荐普通意面</tspan></text></svg><div class="opening-conclusion">旧偏好保留作历史；当前建议必须服从更新后的限制。</div><div class="opening-source">来源：§1–§2；时间线为教学示意。完整任务定义见 <a class="appendix-link" data-slide-target="32" href="#slide-32">附录 A02</a>。</div></div></section><section class="slide story-core opening-visual" data-page="4" data-section="main" data-title="04. 找回了最新偏好，为什么建议还是会出错？"><div class="slide-top">
 <span class="chapter-tag">第一章 · 动态用户画像问题与问题定义</span>
 <span class="slide-index">04 / 29 正文</span>
-</div><div class="story-heading"><h2 class="slide-title">只记最新偏好，也会丢掉问题的答案</h2><p class="slide-lead">同一段偏好变化，可能被问到“现在怎样”“为什么变了”或“以前怎样”。</p></div><div class="slide-body"><svg class="opening-art" viewBox="0 0 1400 440" role="img" aria-label="偏好从传统意面转向无麸质菜肴；不同问题需要当前状态、变更原因或过去记录。教学示意。" xmlns="http://www.w3.org/2000/svg"><title>偏好从传统意面转向无麸质菜肴；不同问题需要当前状态、变更原因或过去记录。教学示意。</title><defs><marker id="ov-arrow-know-me-respond-to-me-4" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto-start-reverse"><path d="M0 0L8 4L0 8Z" fill="context-stroke"/></marker></defs><line x1="160" y1="92" x2="1240" y2="92" stroke="#cbd5e1" stroke-width="4" /><circle cx="230" cy="92" r="10" fill="#4f46e5" stroke="none" stroke-width="2"/><text x="230" y="55" font-size="24" fill="#4f46e5" font-weight="700" text-anchor="middle"><tspan x="230" dy="0">早期</tspan></text><rect x="40" y="122" width="380" height="149" rx="18" fill="#eef2ff" stroke="#eef2ff" stroke-width="1.5" /><text x="230" y="179" font-size="26" fill="#4f46e5" font-weight="700" text-anchor="middle"><tspan x="230" dy="0">喜欢传统意面</tspan></text><text x="230" y="230" font-size="22" fill="#64748b" font-weight="500" text-anchor="middle"><tspan x="230" dy="0">记录最初偏好</tspan></text><circle cx="700" cy="92" r="10" fill="#b45309" stroke="none" stroke-width="2"/><text x="700" y="55" font-size="24" fill="#b45309" font-weight="700" text-anchor="middle"><tspan x="700" dy="0">后来</tspan></text><rect x="510" y="122" width="380" height="149" rx="18" fill="#fffbeb" stroke="#fffbeb" stroke-width="1.5" /><text x="700" y="179" font-size="26" fill="#b45309" font-weight="700" text-anchor="middle"><tspan x="700" dy="0">出现新的饮食限制</tspan></text><text x="700" y="230" font-size="22" fill="#64748b" font-weight="500" text-anchor="middle"><tspan x="700" dy="0">需要避开麸质</tspan></text><circle cx="1170" cy="92" r="10" fill="#059669" stroke="none" stroke-width="2"/><text x="1170" y="55" font-size="24" fill="#059669" font-weight="700" text-anchor="middle"><tspan x="1170" dy="0">现在</tspan></text><rect x="980" y="122" width="380" height="149" rx="18" fill="#ecfdf5" stroke="#ecfdf5" stroke-width="1.5" /><text x="1170" y="179" font-size="26" fill="#059669" font-weight="700" text-anchor="middle"><tspan x="1170" dy="0">选择无麸质菜肴</tspan></text><text x="1170" y="230" font-size="22" fill="#64748b" font-weight="500" text-anchor="middle"><tspan x="1170" dy="0">新建议应以此为准</tspan></text><text x="45" y="332" font-size="25" fill="#0f172a" font-weight="700" text-anchor="start"><tspan x="45" dy="0">“我以前爱吃什么？”</tspan></text><text x="45" y="379" font-size="23" fill="#4f46e5" font-weight="500" text-anchor="start"><tspan x="45" dy="0">仍然需要旧记录</tspan></text><text x="520" y="332" font-size="25" fill="#0f172a" font-weight="700" text-anchor="start"><tspan x="520" dy="0">“为什么不吃意面了？”</tspan></text><text x="520" y="379" font-size="23" fill="#b45309" font-weight="500" text-anchor="start"><tspan x="520" dy="0">需要变化的原因</tspan></text><text x="995" y="332" font-size="25" fill="#0f172a" font-weight="700" text-anchor="start"><tspan x="995" dy="0">“今晚做什么菜？”</tspan></text><text x="995" y="379" font-size="23" fill="#059669" font-weight="500" text-anchor="start"><tspan x="995" dy="0">需要最新偏好</tspan></text></svg><div class="opening-conclusion">需要更新当前状态，也需要保留变化的来龙去脉。</div><div class="opening-source">来源：§1–§2；时间线为教学示意。完整任务定义见 <a class="appendix-link" data-slide-target="32" href="#slide-32">附录 A02</a>。</div></div></section><section class="slide story-core" data-page="5" data-section="main" data-title="05. 披萨与麸质过敏：回应应依据哪条信息？"><div class="slide-top"><span class="chapter-tag">第一章 · 动态用户画像问题与问题定义</span><span class="slide-index">05 / 29 正文</span></div><div class="story-heading"><h2 class="slide-title">披萨与麸质过敏：回应应依据哪条信息？</h2><p class="slide-lead">前两页用简化的饮食时间线区分“记得”与“用得上”。现在对照 Figure 1：看旧偏好、更新事件和当下提问分别来自哪些会话，确认答案为何必须跟着历史变化。</p></div><div class="slide-body">
+</div><div class="story-heading"><h2 class="slide-title">找回了最新偏好，为什么建议还是会出错？</h2><p class="slide-lead">沿用上一页更新后的饮食限制：显式问限制时能答对，换成“今晚吃什么”却仍可能推荐普通意面。缺的是主动把记忆用进回应。</p></div><div class="slide-body"><svg class="opening-art" viewBox="0 0 1400 440" role="img" aria-label="同一条无麸质偏好：显式提问能答对，晚餐建议却可能用错。教学示意。" xmlns="http://www.w3.org/2000/svg"><title>同一条无麸质偏好：显式提问能答对，晚餐建议却可能用错。教学示意。</title><defs><marker id="ov-arrow-know-me-respond-to-me-4" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto-start-reverse"><path d="M0 0L8 4L0 8Z" fill="context-stroke"/></marker></defs><rect x="410" y="8" width="580" height="66" rx="18" fill="#fffbeb" stroke="#fde68a" stroke-width="1.5" /><text x="700" y="50" font-size="25" fill="#b45309" font-weight="700" text-anchor="middle"><tspan x="700" dy="0">已知当前限制：需要避开麸质</tspan></text><rect x="30" y="112" width="640" height="308" rx="18" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" /><text x="58" y="153" font-size="25" fill="#4f46e5" font-weight="700" text-anchor="start"><tspan x="58" dy="0">显式问答：问题已点明要查什么</tspan></text><rect x="58" y="181" width="584" height="68" rx="12" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5" /><text x="82" y="224" font-size="27" fill="#0f172a" font-weight="500" text-anchor="start"><tspan x="82" dy="0">“我现在有什么饮食限制？”</tspan></text><text x="58" y="286" font-size="20" fill="#64748b" font-weight="500" text-anchor="start"><tspan x="58" dy="0">助手回复</tspan></text><rect x="58" y="305" width="584" height="72" rx="12" fill="#eef2ff" stroke="#eef2ff" stroke-width="1.5" /><text x="82" y="350" font-size="27" fill="#4f46e5" font-weight="650" text-anchor="start"><tspan x="82" dy="0">“你现在只吃无麸质食物。”</tspan></text><rect x="730" y="112" width="640" height="308" rx="18" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" /><text x="758" y="153" font-size="25" fill="#be123c" font-weight="700" text-anchor="start"><tspan x="758" dy="0">实际请求：不再提醒饮食限制</tspan></text><rect x="758" y="181" width="584" height="68" rx="12" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5" /><text x="782" y="224" font-size="27" fill="#0f172a" font-weight="500" text-anchor="start"><tspan x="782" dy="0">“今晚做什么菜？”</tspan></text><text x="758" y="286" font-size="20" fill="#64748b" font-weight="500" text-anchor="start"><tspan x="758" dy="0">助手回复</tspan></text><rect x="758" y="305" width="584" height="72" rx="12" fill="#fff1f2" stroke="#fff1f2" stroke-width="1.5" /><text x="782" y="350" font-size="27" fill="#be123c" font-weight="650" text-anchor="start"><tspan x="782" dy="0">“试试普通小麦意面吧。”</tspan></text><line x1="782" y1="345" x2="1112" y2="345" stroke="#be123c" stroke-width="2" /></svg><div class="opening-conclusion">“能答出偏好”不等于“会按偏好回答当前请求”。</div><div class="opening-source">来源：§1、§2；对话为教学示意。完整题型见 <a class="appendix-link" data-slide-target="32" href="#slide-32">附录 A02</a>；评测结果留在实验章节。</div></div></section><section class="slide story-core" data-page="5" data-section="main" data-title="05. PersonaMem 怎样把这类问题做成评测？"><div class="slide-top"><span class="chapter-tag">第一章 · 动态用户画像问题与问题定义</span><span class="slide-index">05 / 29 正文</span></div><div class="story-heading"><h2 class="slide-title">PersonaMem 怎样把这类问题做成评测？</h2><p class="slide-lead">Figure 1 把刚才的问题变成一项任务：给出用户背景和多会话历史，在新请求出现时，选出最贴合当前画像的回复。用户不会在每次提问里重述偏好。</p></div><div class="slide-body">
 <div class="grid-2-wide-left story-split" style="height:465px;flex:0 0 465px;">
 <div class="fig-box">
 <img alt="Figure 1: Overview of PERSONAMEM benchmark" data-height="661" data-source-crop="105.005,78.703,507.448,285.269" data-source-page="2" data-source-pdf="R17" data-width="1288" data-figure-ref="figure-00" style="max-height:410px;"/>
 <div class="fig-cap">Figure 1：PersonaMem 基准概览（左：动静态画像；中：多会话偏好演化；右：原位追问与正误回复）· PDF 2</div>
 </div>
-<div class="visual-sequence" data-sequence-notes='["早期会话：表达初始偏好", "中期会话：突发事件触发偏好更新", "近期原位追问：根据当前状态作答"]'>
-<div class="e-notes"><article class="e-note" data-visual-step="1"><h4>第一步：建立旧偏好</h4><p>Session 2 中，用户说喜欢意大利菜，尤其披萨。此时推荐意面可以与历史一致。先记住这个“当时正确”的状态。</p></article><article class="e-note" data-visual-step="2"><h4>第二步：找到更新事件与原因</h4><p>Session 12 中，用户透露麸质过敏，并改吃地中海烤海鲜。关键不只是出现了新菜名，而是生活事件让旧推荐失效。</p></article><article class="e-note" data-visual-step="3"><h4>第三步：把当前状态用进回复</h4><p>到了 Session 20，推荐晚餐要匹配最新偏好；提到意大利餐厅时，还要联想到过敏这一原因。同一历史会支持不同提问。</p></article></div>
+<div class="visual-sequence" data-sequence-notes='["输入：历史里同时保留旧偏好与更新事件", "提问：新请求不会重复饮食限制", "回答：根据当前画像区分候选回复"]'>
+<div class="e-notes"><article class="e-note" data-visual-step="1"><h4>输入：同一用户的多会话历史</h4><p>先读完整历史：Session 2 喜欢披萨，Session 12 因麸质过敏改吃地中海烤海鲜。更新事件与原因都藏在会话里。</p></article><article class="e-note" data-visual-step="2"><h4>提问：用户不再重复限制</h4><p>Session 20 的“今晚做什么菜？”不再提示过敏；“昨天去了意大利餐厅”则需要关联旧事件。同一历史，可以对应不同请求。</p></article><article class="e-note" data-visual-step="3"><h4>回答：按当前画像选择回复</h4><p>晚餐建议要避开麸质；谈起意大利餐厅时，也要联想到此前的过敏原因。只重复旧偏好或泛泛寒暄，都不够。</p></article></div>
 </div>
 </div>
 <div class="fig-cap story-source" style="text-align:left;">来源：§1–§2、Figure 1，PDF 2–3。原图展示了同一用户在 2020 至 2024 年间横跨美食推荐、旅行规划与心理咨询的多会话历史。　<a class="appendix-link" data-slide-target="31" href="#slide-31">附录 A01</a></div></div></section><section class="slide story-core" data-page="6" data-section="main" data-title="06. 静态属性可读取，动态偏好要从对话中推断"><div class="slide-top"><span class="chapter-tag">第一章 · 动态用户画像问题与问题定义</span><span class="slide-index">06 / 29 正文</span></div><div class="story-heading"><h2 class="slide-title">静态属性可读取，动态偏好要从对话中推断</h2><p class="slide-lead">例子里的过敏限制为什么得从历史找？这个基准直接提供姓名等静态背景，却不直接提供动态偏好；模型必须从跨话题会话中推断当前状态与变化原因，而不是从现成画像中照抄。</p></div><div class="slide-body">
@@ -1886,9 +1905,93 @@ document.querySelectorAll('.algo-walkthrough').forEach((root,index)=>{
 });
 
 
+
+// Couple explanatory steps to authored locations in the original figures.
+const imageFocusDefinitions={"5":{"regions":[[0,35,9,63,41,"1"],[0,35,48.5,48,6,"2"],[0,35,76,48,6,"2"],[0,35,55,48,19,"3"],[0,35,82,48,16,"3"]]},"7":{"regions":[[0,8,32,65,11,"1"],[0,8,47,65,11,"2"],[0,8,71,65,12,"3"],[0,8,85,65,11,"4"]]},"8":{"regions":[[0,1,12,98,23,"1"],[0,1,72,98,9,"2"],[0,1,51,98,20,"3"]]},"10":{"regions":[[0,1,28,98,56,"1"],[1,1,13,98,60,"2"],[1,1,75,98,23,"3"]]},"11":{"regions":[[0,1,12,98,22,"1"],[0,1,35,98,29,"2"],[0,1,65,98,33,"3"]]},"13":{"regions":[[0,22,1,77,26,"1"],[0,22,28,77,27,"2"],[0,22,58,77,41,"3"]]},"14":{"regions":[[0,20,1,79,44,"1"],[0,23,46,74,28,"2"],[0,45,64,43,27,"3"]]},"15":{"regions":[[0,22,4,77,45,"1,2"],[0,22,54,77,44,"3"]]},"17":{"regions":[[0,1,82,24,16,"1"],[0,26,82,19,16,"2"],[0,47,82,27,16,"3"],[0,75,82,24,16,"4"]]},"18":{"regions":[[0,18,85,18,10,"1"],[0,36,85,19,10,"2"],[0,56,85,41,10,"3"]]},"20":{"regions":[[0,36,6,56,21,"1"],[0,1,29,91,11,"2"],[0,1,41,91,10,"2"],[0,1,86,91,11,"2"]]},"21":{"regions":[[0,17.3,7,4,86,"1"],[0,52.4,7,23.5,86,"2"],[0,79.5,7,8,86,"3"]]},"22":{"regions":[[0,18.5,70,8,11,"1"],[0,54.75,70,4,11,"1"],[0,70.75,70,4,11,"1"],[0,90.8,70,4,11,"2"]]},"23":{"regions":[[0,64,5,34,11,"1"],[0,90,28,5,45,"2"],[0,37,27,8,46,"2"],[0,61,27,8,46,"2"],[0,48,18,5,55,"3"],[0,52,18,5,55,"3"]]},"25":{"regions":[[0,47,24,10.5,72,"3"],[0,57.5,24,10.5,72,"3"]]},"26":{"regions":[[0,40,18,9,65,"1"],[0,57,71,18,12,"2"],[0,75,71,24,12,"3"]]}};
+const imageFocusImages=new WeakMap(),imageFocusGroups=[];
+Object.entries(imageFocusDefinitions).forEach(([number,definition])=>{
+  const slide=slides.find(s=>Number(s.dataset.page)===Number(number));
+  if(!slide)return;
+  const images=Array.from(slide.querySelectorAll('img'));
+  const vectors=Array.from(slide.querySelectorAll('svg')).filter(e=>!e.closest('.latex-source,.katex,button,.nav-btn'));
+  const targets=[];
+  (definition.regions||[]).forEach(([index,x,y,w,h,steps])=>{
+    const image=images[index];if(!image)return;
+    const parent=image.parentElement;
+    if(getComputedStyle(parent).position==='static')parent.style.position='relative';
+    const element=document.createElement('span');
+    element.className='paper-region image-step-focus';
+    element.dataset.visualStep=steps;element.setAttribute('aria-hidden','true');
+    element.style.cssText=`left:${x}%;top:${y}%;width:${w}%;height:${h}%;`;
+    imageFocusImages.set(element,image);parent.append(element);
+    targets.push({element,steps:steps.split(',').map(Number)});
+  });
+  (definition.vectors||[]).forEach(([index,x,y,w,h,steps])=>{
+    const svg=vectors[index];if(!svg)return;
+    const box=svg.viewBox.baseVal;
+    const element=document.createElementNS('http://www.w3.org/2000/svg','rect');
+    element.setAttribute('class','image-step-focus vector-step-focus');
+    element.setAttribute('x',box.x+x*box.width/100);element.setAttribute('y',box.y+y*box.height/100);
+    element.setAttribute('width',w*box.width/100);element.setAttribute('height',h*box.height/100);
+    element.setAttribute('rx','2');element.setAttribute('aria-hidden','true');
+    element.dataset.visualStep=steps;svg.append(element);
+    targets.push({element,steps:steps.split(',').map(Number)});
+  });
+  const swaps=definition.swaps||{};
+  const originals=new Map();
+  Object.values(swaps).forEach(swap=>{
+    const image=images[swap.image];if(!image||originals.has(image))return;
+    const caption=image.parentElement.querySelector('.fig-cap');
+    originals.set(image,{source:image.src,ref:image.dataset.figureRef,style:image.getAttribute('style'),
+      alt:image.alt,label:`放大图片：${image.alt||'论文截图'}`,caption,html:caption?.innerHTML});
+  });
+  imageFocusGroups.push({slide,targets,swaps,images,originals});
+});
+function syncImageFocusSources(group,step){
+  const selected=group.swaps[step];
+  group.originals.forEach((original,image)=>{
+    const swap=selected&&group.images[selected.image]===image?selected:null;
+    const source=swap?embeddedFigureViews.get(swap.ref):original.source;
+    if(!source||image.src===source)return;
+    if(swap){
+      const scale=stage.getBoundingClientRect().width/1600;
+      const box=image.getBoundingClientRect();
+      image.style.setProperty('width',`${box.width/scale}px`,'important');
+      image.style.setProperty('height',`${box.height/scale}px`,'important');
+      image.style.setProperty('object-fit','contain','important');
+      image.alt=swap.caption;image.dataset.figureRef=swap.ref;
+      if(original.caption)original.caption.textContent=swap.caption;
+      image.setAttribute('aria-label',`放大图片：${swap.caption}`);
+    }else{
+      if(original.style===null)image.removeAttribute('style');else image.setAttribute('style',original.style);
+      image.alt=original.alt;image.dataset.figureRef=original.ref;
+      if(original.caption)original.caption.innerHTML=original.html;
+      if(original.label===null)image.removeAttribute('aria-label');else image.setAttribute('aria-label',original.label);
+    }
+    image.src=source;
+  });
+}
+function syncImageStepFocus(root,step){
+  imageFocusGroups.filter(group=>group.slide===root.closest('.slide')).forEach(group=>{
+    syncImageFocusSources(group,step);
+    group.targets.forEach(({element,steps})=>{
+      element.classList.toggle('is-current',step>0&&steps.includes(step));
+      element.classList.toggle('is-complete',step>0&&steps.some(i=>i<step));
+    });
+  });
+}
+window.addEventListener('beforeprint',()=>{
+  algoPlayers.forEach(p=>p.pause());
+  imageFocusGroups.forEach(group=>syncImageFocusSources(group,0));
+});
+window.addEventListener('afterprint',()=>{
+  visualPlayers.forEach(p=>syncImageStepFocus(p.root,p.step));
+  scheduleAnimationFocus();
+});
+
 // Image regions use percentages of the painted image, not its surrounding box.
 const animationRegions=Array.from(document.querySelectorAll('.paper-region,.paper-focus')).map(element=>({
-  element,image:element.parentElement.querySelector('img'),
+  element,image:imageFocusImages.get(element)||element.parentElement.querySelector('img'),
   rect:['left','top','width','height'].map(key=>parseFloat(element.style[key])/100)
 }));
 function animationImageBounds(image){
@@ -1916,6 +2019,7 @@ function animationImageBounds(image){
 function alignAnimationRegions(slide){
   animationRegions.filter(r=>slide.contains(r.element)).forEach(({element,image,rect})=>{
     if(!image)return;
+    if(element.classList.contains('image-step-focus'))element.style.visibility=image.complete?'':'hidden';
     const bounds=animationImageBounds(image);
     if(!bounds)return;
     const parent=element.offsetParent;
@@ -2024,6 +2128,7 @@ document.querySelectorAll('.visual-sequence').forEach(root=>{
   const total=Math.max(notes.length,...ids,0);if(!total)return;
   let current=0,timer=null;
   function render(){
+    syncImageStepFocus(root,current);
     root.dataset.currentStep=String(current);
     root.classList.toggle('sequence-active',current>0);
     nodes.forEach(el=>{

@@ -1027,6 +1027,25 @@ SOFTWARE.
   }
 }
 </style>
+<style id="text-image-step-focus">
+#deck-stage .image-step-focus {
+  position:absolute;box-sizing:border-box!important;pointer-events:none;z-index:2;
+  border:2px solid transparent!important;border-radius:4px;
+  background:transparent!important;box-shadow:none!important;filter:none!important;
+  opacity:0!important;transition:opacity .15s ease!important;
+}
+#deck-stage .image-step-focus.is-current {opacity:1!important;border-color:#4f46e5!important;}
+#deck-stage .vector-step-focus {fill:transparent;stroke:transparent;stroke-width:2;vector-effect:non-scaling-stroke;}
+#deck-stage .vector-step-focus.is-current {stroke:#4f46e5;}
+@media (prefers-reduced-motion:reduce) {
+  #deck-stage .image-step-focus {transition:none!important;}
+}
+@media print {
+  #deck-stage .image-step-focus,#deck-stage .image-step-focus.is-current {
+    display:none!important;border-color:transparent!important;stroke:transparent!important;
+  }
+}
+</style>
 </head>
 <body class="narrative-v7 hipporag-deck" data-appendix-start="28" data-main-count="27"><div id="stage-wrapper"><div id="deck-stage"><section class="slide story-core hp-slide cover-slide" data-page="1" data-section="main" data-title="01. HippoRAG: Neurobiologically Inspired Long-Term Memory for Large Language Models"><div class="slide-top"><span class="chapter-tag">R12 · 论文精读 · HippoRAG</span><span class="slide-index">01 / 27 正文</span></div><div class="story-heading"><h1 class="slide-title">HippoRAG: Neurobiologically Inspired Long-Term Memory for Large Language Models</h1><p class="paper-topic">用图索引连接跨段落证据</p><p class="paper-authors" aria-label="论文作者">Bernal Jiménez Gutiérrez <span aria-hidden="true">·</span> Yiheng Shu <span aria-hidden="true">·</span> Yu Gu <span aria-hidden="true">·</span> Michihiro Yasunaga <span aria-hidden="true">·</span> Yu Su</p><p class="slide-lead">RAG 能让大模型查外部知识，但常见向量检索把文本当成孤立片段。遇到需要靠共享实体串起多个段落的多跳问题，就可能只找到一半证据。HippoRAG 受“海马体索引理论”（Hippocampal Indexing Theory）启发：用大模型模拟新皮层，从语料中抽取开放知识图谱；用实体识别与个性化 PageRank（PPR）对应齿状回的模式分离和 CA3 的关联补全。这样可以在一次检索中，沿图传播查询信号，找回跨文档证据。</p></div><div class="slide-body"><div class="grid-3 story-split" style="height:330px;flex:0 0 330px;"><div class="card indigo"><div class="card-title"><span class="badge badge-indigo">问题</span><span>线索分散在不同段落，怎样一起找到？</span></div><p>多跳问答的线索可能分散在不同文档，只靠中间实体相连，例如先由专著找到斯坦福教授 Thomas，再找其阿尔茨海默症研究。向量检索缺少跨段结构，还没读到第一跳答案时，很难一次找齐第二跳证据。</p></div><div class="card emerald"><div class="card-title"><span class="badge badge-emerald">方法</span><span>离线建图，查询时沿实体关系传播</span></div><p>离线用 LLM 抽取无模式三元组，再用编码器连接同义词，建成开放知识图谱。查询时把问题中的命名实体映射到种子节点，按稀有度加权，用一次个性化 PageRank 检索沿关系边传播概率，再汇总为段落分数。</p></div><div class="card warm"><div class="card-title"><span class="badge badge-amber">证据与边界</span><span>多跳召回更好，在线查询也更省</span></div><p>在 MuSiQue、2WikiMultiHopQA 与 HotpotQA 上，单步检索召回率优于稠密、稀疏基线，也能接近或超过 IRCoT 等多轮检索。在线查询延迟与成本降低 10–30 倍，离线建图成本较 GraphRAG 降低约 13 倍。</p></div></div><div class="paper-reference"><a href="https://arxiv.org/abs/2405.14831v3" target="_blank" rel="noopener noreferrer">论文原文 ↗</a><span>原始图表与补充材料见附录。</span></div></div></section>
 <section class="slide story-core hp-slide" data-page="2" data-section="main" data-title="02. 阅读路线：从问题到方法，再核对证据"><div class="slide-top"><span class="chapter-tag">阅读路线</span><span class="slide-index">02 / 27 正文</span></div><div class="story-heading"><h2 class="slide-title">阅读路线：从问题到方法，再核对证据</h2><p class="slide-lead">五个部分串起本文的实例、机制与实验；点击任一行可跳到对应正文，原始图表与补充细节保留在附录。</p></div><div class="slide-body"><nav class="route-map" aria-label="正文阅读路线"><a class="route-row" href="#s3" data-slide-target="3"><span class="route-number">01</span><span class="route-content"><strong>问题：跨段落证据为什么容易漏检？</strong><span class="route-description">从 Stanford 教授的实例理解图索引与联想检索的动机。</span></span><span class="route-range">P03–P05</span></a><a class="route-row" href="#s6" data-slide-target="6"><span class="route-number">02</span><span class="route-content"><strong>方法：离线建图与在线信号传播</strong><span class="route-description">沿实体、关系、同义边、PPR 与段落排序串起检索过程。</span></span><span class="route-range">P06–P13</span></a><a class="route-row" href="#s14" data-slide-target="14"><span class="route-number">03</span><span class="route-content"><strong>评测：召回、整链召回与数据集差异</strong><span class="route-description">核对指标和三个数据集，不把一种增益当作统一结果。</span></span><span class="route-range">P14–P18</span></a><a class="route-row" href="#s19" data-slide-target="19"><span class="route-number">04</span><span class="route-content"><strong>实验：问答收益、成本与消融</strong><span class="route-description">比较迭代检索、端到端 F1、PPR 和抽取器。</span></span><span class="route-range">P19–P23</span></a><a class="route-row" href="#s24" data-slide-target="24"><span class="route-number">05</span><span class="route-content"><strong>边界：错误类型与事实更新</strong><span class="route-description">结合小规模错误分析与定性案例，区分静态检索和动态记忆。</span></span><span class="route-range">P24–P27</span></a></nav></div></section><section class="slide story-core hp-slide opening-visual" data-page="3" data-section="main" data-title="03. 哪位斯坦福教授研究阿尔茨海默病？"><div class="slide-top"><span class="chapter-tag">第一章 · 从跨段证据到关联索引</span><span class="slide-index">03 / 27 正文</span></div><div class="story-heading"><h2 class="slide-title">哪位斯坦福教授研究阿尔茨海默病？</h2><p class="slide-lead">要同时核对任职学校和研究方向。一段只说在 Stanford 任教，另一段只说研究 Alzheimer’s；检索需要把两段一起找回。</p></div><div class="slide-body"><svg class="opening-art" viewBox="0 0 1400 440" role="img" aria-label="两份资料分别说明Thomas在Stanford任职、Thomas研究Alzheimer’s；必须组合两份证据才能回答。" xmlns="http://www.w3.org/2000/svg"><title>两份资料分别说明Thomas在Stanford任职、Thomas研究Alzheimer’s；必须组合两份证据才能回答。</title><defs><marker id="ov-arrow-hipporag-3" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto-start-reverse"><path d="M0 0L8 4L0 8Z" fill="context-stroke"/></marker></defs><rect x="44" y="45" width="600" height="294" rx="18" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1.5" /><rect x="35" y="54" width="600" height="294" rx="18" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" /><rect x="55" y="74" width="560" height="42" rx="9" fill="#eef2ff" stroke="#eef2ff" stroke-width="1.5" /><text x="71" y="103" font-size="22" fill="#4f46e5" font-weight="700" text-anchor="start"><tspan x="71" dy="0">资料 A：任职信息</tspan></text><circle cx="92" cy="171" r="15" fill="#4f46e5" stroke="none" stroke-width="2"/><path d="M64,220 Q64,191 92,191 Q120,191 120,220" fill="#4f46e5"/><text x="145" y="190" font-size="29" fill="#0f172a" font-weight="650" text-anchor="start"><tspan x="145" dy="0">Thomas 任职于 Stanford。</tspan></text><rect x="70" y="267" width="530" height="48" rx="9" fill="#eef2ff" stroke="#eef2ff" stroke-width="1.5" /><text x="335" y="299" font-size="23" fill="#4f46e5" font-weight="600" text-anchor="middle"><tspan x="335" dy="0">回答了学校，却没说明研究方向</tspan></text><rect x="774" y="45" width="600" height="294" rx="18" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1.5" /><rect x="765" y="54" width="600" height="294" rx="18" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" /><rect x="785" y="74" width="560" height="42" rx="9" fill="#ecfdf5" stroke="#ecfdf5" stroke-width="1.5" /><text x="801" y="103" font-size="22" fill="#059669" font-weight="700" text-anchor="start"><tspan x="801" dy="0">资料 B：研究信息</tspan></text><circle cx="822" cy="171" r="15" fill="#059669" stroke="none" stroke-width="2"/><path d="M794,220 Q794,191 822,191 Q850,191 850,220" fill="#059669"/><text x="875" y="190" font-size="27" fill="#0f172a" font-weight="650" text-anchor="start"><tspan x="875" dy="0">Thomas 研究</tspan><tspan x="875" dy="37">Alzheimer’s（阿尔茨海默病）。</tspan></text><rect x="800" y="267" width="530" height="48" rx="9" fill="#ecfdf5" stroke="#ecfdf5" stroke-width="1.5" /><text x="1065" y="299" font-size="23" fill="#059669" font-weight="600" text-anchor="middle"><tspan x="1065" dy="0">回答了方向，却没说明任职学校</tspan></text><text x="700" y="408" font-size="29" fill="#0f172a" font-weight="700" text-anchor="middle"><tspan x="700" dy="0">两段资料要指向同一个人，答案才成立。</tspan></text></svg><div class="opening-conclusion">检索需要找的不只是相似段落，还有段落之间的联系。</div><div class="opening-source">来源：Figure 1、§1；对话与资料文字为概念图的简化重述，非真实检索日志。<a class="appendix-link" data-slide-target="29" href="#slide-29">附录 A01 · 原图</a>。</div></div></section><section class="slide story-core hp-slide opening-visual" data-page="4" data-section="main" data-title="04. 先把两段资料，连到同一个 Thomas"><div class="slide-top"><span class="chapter-tag">第一章 · 从跨段证据到关联索引</span><span class="slide-index">04 / 27 正文</span></div><div class="story-heading"><h2 class="slide-title">先把两段资料，连到同一个 Thomas</h2><p class="slide-lead">先把两份资料接到同一个 Thomas，再从问题中的学校和疾病出发，沿图给相关节点打分。这一步使用个性化 PageRank（PPR），分数最后用于排列原文段落。</p></div><div class="slide-body"><svg class="opening-art" viewBox="0 0 1400 440" role="img" aria-label="知识图谱以任职和研究关系连接Stanford、Thomas、Alzheimer’s；灰色分支是其他关联节点，绿色强调本例需要的联系，不是实测PPR概率。" xmlns="http://www.w3.org/2000/svg"><title>知识图谱以任职和研究关系连接Stanford、Thomas、Alzheimer’s；灰色分支是其他关联节点，绿色强调本例需要的联系，不是实测PPR概率。</title><defs><marker id="ov-arrow-hipporag-4" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto-start-reverse"><path d="M0 0L8 4L0 8Z" fill="context-stroke"/></marker></defs><circle cx="700" cy="200" r="92" fill="#ecfdf5" stroke="none" stroke-width="2"/><line x1="340" y1="200" x2="610" y2="200" stroke="#059669" stroke-width="5" /><line x1="790" y1="200" x2="1060" y2="200" stroke="#059669" stroke-width="5" /><line x1="280" y1="200" x2="450" y2="62" stroke="#cbd5e1" stroke-width="2" /><circle cx="450" cy="62" r="21" fill="#e2e8f0" stroke="none" stroke-width="2"/><text x="450" y="30" font-size="20" fill="#64748b" font-weight="500" text-anchor="middle"><tspan x="450" dy="0">其他教授</tspan></text><line x1="280" y1="200" x2="450" y2="335" stroke="#cbd5e1" stroke-width="2" /><circle cx="450" cy="335" r="21" fill="#e2e8f0" stroke="none" stroke-width="2"/><text x="450" y="385" font-size="20" fill="#64748b" font-weight="500" text-anchor="middle"><tspan x="450" dy="0">其他教授</tspan></text><line x1="1120" y1="200" x2="950" y2="62" stroke="#cbd5e1" stroke-width="2" /><circle cx="950" cy="62" r="21" fill="#e2e8f0" stroke="none" stroke-width="2"/><text x="950" y="30" font-size="20" fill="#64748b" font-weight="500" text-anchor="middle"><tspan x="950" dy="0">其他研究者</tspan></text><line x1="1120" y1="200" x2="950" y2="335" stroke="#cbd5e1" stroke-width="2" /><circle cx="950" cy="335" r="21" fill="#e2e8f0" stroke="none" stroke-width="2"/><text x="950" y="385" font-size="20" fill="#64748b" font-weight="500" text-anchor="middle"><tspan x="950" dy="0">其他研究者</tspan></text><rect x="70" y="152" width="270" height="96" rx="18" fill="#eef2ff" stroke="#a5b4fc" stroke-width="1.5" /><text x="205" y="211" font-size="31" fill="#4f46e5" font-weight="700" text-anchor="middle"><tspan x="205" dy="0">Stanford</tspan></text><rect x="1060" y="152" width="270" height="96" rx="18" fill="#eef2ff" stroke="#a5b4fc" stroke-width="1.5" /><text x="1195" y="211" font-size="29" fill="#4f46e5" font-weight="700" text-anchor="middle"><tspan x="1195" dy="0">Alzheimer’s</tspan></text><circle cx="700" cy="200" r="67" fill="#ffffff" stroke="#059669" stroke-width="3"/><text x="700" y="210" font-size="28" fill="#059669" font-weight="700" text-anchor="middle"><tspan x="700" dy="0">Thomas</tspan></text><text x="475" y="182" font-size="24" fill="#059669" font-weight="700" text-anchor="middle"><tspan x="475" dy="0">任职</tspan></text><text x="925" y="182" font-size="24" fill="#059669" font-weight="700" text-anchor="middle"><tspan x="925" dy="0">研究</tspan></text><text x="205" y="290" font-size="22" fill="#4f46e5" font-weight="600" text-anchor="middle"><tspan x="205" dy="0">问题中的线索</tspan></text><text x="1195" y="290" font-size="22" fill="#4f46e5" font-weight="600" text-anchor="middle"><tspan x="1195" dy="0">问题中的线索</tspan></text></svg><div class="opening-conclusion">图保留段落间的联系；检索沿图评分，最终返回的仍是有出处的原文。</div><div class="opening-source">来源：Figure 1–2、§2；高亮为结构示意，不是概率分布或确定的交集运算。<a class="appendix-link" data-slide-target="30" href="#slide-30">附录 A02 · 架构</a>。</div></div></section>
@@ -1260,9 +1279,93 @@ document.querySelectorAll('.algo-walkthrough').forEach((root,index)=>{
 });
 
 
+
+// Couple explanatory steps to authored locations in the original figures.
+const imageFocusDefinitions={"5":{"regions":[[0,35,17,62,20,"1"],[0,1,69,97,28,"2"]]},"7":{"regions":[[0,2,29,96,15,"2"],[0,2,63,96,18,"2"]]},"8":{"regions":[[0,2,20,95,24,"1"],[0,2,46,95,51,"2"]]},"9":{"regions":[[0,30,32,66,43,"1"],[0,48,12,22,66,"2"]]},"10":{"regions":[[0,2,33,66,39,"1"],[0,2,72,59,18,"2"]]},"13":{"regions":[[0,2,36,96,18,"1"],[0,2,61,96,36,"1"],[0,2,31,96,24,"2"],[0,2,56,96,41,"2"]]},"18":{"regions":[[0,68,8,31,69,"1"]]}};
+const imageFocusImages=new WeakMap(),imageFocusGroups=[];
+Object.entries(imageFocusDefinitions).forEach(([number,definition])=>{
+  const slide=slides.find(s=>Number(s.dataset.page)===Number(number));
+  if(!slide)return;
+  const images=Array.from(slide.querySelectorAll('img'));
+  const vectors=Array.from(slide.querySelectorAll('svg')).filter(e=>!e.closest('.latex-source,.katex,button,.nav-btn'));
+  const targets=[];
+  (definition.regions||[]).forEach(([index,x,y,w,h,steps])=>{
+    const image=images[index];if(!image)return;
+    const parent=image.parentElement;
+    if(getComputedStyle(parent).position==='static')parent.style.position='relative';
+    const element=document.createElement('span');
+    element.className='paper-region image-step-focus';
+    element.dataset.visualStep=steps;element.setAttribute('aria-hidden','true');
+    element.style.cssText=`left:${x}%;top:${y}%;width:${w}%;height:${h}%;`;
+    imageFocusImages.set(element,image);parent.append(element);
+    targets.push({element,steps:steps.split(',').map(Number)});
+  });
+  (definition.vectors||[]).forEach(([index,x,y,w,h,steps])=>{
+    const svg=vectors[index];if(!svg)return;
+    const box=svg.viewBox.baseVal;
+    const element=document.createElementNS('http://www.w3.org/2000/svg','rect');
+    element.setAttribute('class','image-step-focus vector-step-focus');
+    element.setAttribute('x',box.x+x*box.width/100);element.setAttribute('y',box.y+y*box.height/100);
+    element.setAttribute('width',w*box.width/100);element.setAttribute('height',h*box.height/100);
+    element.setAttribute('rx','2');element.setAttribute('aria-hidden','true');
+    element.dataset.visualStep=steps;svg.append(element);
+    targets.push({element,steps:steps.split(',').map(Number)});
+  });
+  const swaps=definition.swaps||{};
+  const originals=new Map();
+  Object.values(swaps).forEach(swap=>{
+    const image=images[swap.image];if(!image||originals.has(image))return;
+    const caption=image.parentElement.querySelector('.fig-cap');
+    originals.set(image,{source:image.src,ref:image.dataset.figureRef,style:image.getAttribute('style'),
+      alt:image.alt,label:`放大图片：${image.alt||'论文截图'}`,caption,html:caption?.innerHTML});
+  });
+  imageFocusGroups.push({slide,targets,swaps,images,originals});
+});
+function syncImageFocusSources(group,step){
+  const selected=group.swaps[step];
+  group.originals.forEach((original,image)=>{
+    const swap=selected&&group.images[selected.image]===image?selected:null;
+    const source=swap?embeddedFigureViews.get(swap.ref):original.source;
+    if(!source||image.src===source)return;
+    if(swap){
+      const scale=stage.getBoundingClientRect().width/1600;
+      const box=image.getBoundingClientRect();
+      image.style.setProperty('width',`${box.width/scale}px`,'important');
+      image.style.setProperty('height',`${box.height/scale}px`,'important');
+      image.style.setProperty('object-fit','contain','important');
+      image.alt=swap.caption;image.dataset.figureRef=swap.ref;
+      if(original.caption)original.caption.textContent=swap.caption;
+      image.setAttribute('aria-label',`放大图片：${swap.caption}`);
+    }else{
+      if(original.style===null)image.removeAttribute('style');else image.setAttribute('style',original.style);
+      image.alt=original.alt;image.dataset.figureRef=original.ref;
+      if(original.caption)original.caption.innerHTML=original.html;
+      if(original.label===null)image.removeAttribute('aria-label');else image.setAttribute('aria-label',original.label);
+    }
+    image.src=source;
+  });
+}
+function syncImageStepFocus(root,step){
+  imageFocusGroups.filter(group=>group.slide===root.closest('.slide')).forEach(group=>{
+    syncImageFocusSources(group,step);
+    group.targets.forEach(({element,steps})=>{
+      element.classList.toggle('is-current',step>0&&steps.includes(step));
+      element.classList.toggle('is-complete',step>0&&steps.some(i=>i<step));
+    });
+  });
+}
+window.addEventListener('beforeprint',()=>{
+  algoPlayers.forEach(p=>p.pause());
+  imageFocusGroups.forEach(group=>syncImageFocusSources(group,0));
+});
+window.addEventListener('afterprint',()=>{
+  visualPlayers.forEach(p=>syncImageStepFocus(p.root,p.step));
+  scheduleAnimationFocus();
+});
+
 // Image regions use percentages of the painted image, not its surrounding box.
 const animationRegions=Array.from(document.querySelectorAll('.paper-region,.paper-focus')).map(element=>({
-  element,image:element.parentElement.querySelector('img'),
+  element,image:imageFocusImages.get(element)||element.parentElement.querySelector('img'),
   rect:['left','top','width','height'].map(key=>parseFloat(element.style[key])/100)
 }));
 function animationImageBounds(image){
@@ -1290,6 +1393,7 @@ function animationImageBounds(image){
 function alignAnimationRegions(slide){
   animationRegions.filter(r=>slide.contains(r.element)).forEach(({element,image,rect})=>{
     if(!image)return;
+    if(element.classList.contains('image-step-focus'))element.style.visibility=image.complete?'':'hidden';
     const bounds=animationImageBounds(image);
     if(!bounds)return;
     const parent=element.offsetParent;
@@ -1398,6 +1502,7 @@ document.querySelectorAll('.visual-sequence').forEach(root=>{
   const total=Math.max(notes.length,...ids,0);if(!total)return;
   let current=0,timer=null;
   function render(){
+    syncImageStepFocus(root,current);
     root.dataset.currentStep=String(current);
     root.classList.toggle('sequence-active',current>0);
     nodes.forEach(el=>{
