@@ -247,107 +247,108 @@ def tree_scene(x=20, y=48, width=386, height=208, focus=""):
     )
 
 
-def opening_task():
-    slots = "".join(
-        f'<rect x="{457+i*51}" y="123" width="42" height="40" rx="5" fill="#f8fafc" stroke="#cbd5e1"/>'
-        for i in range(6)
+def wood_icon(x, y):
+    return (
+        f'<g transform="translate({x} {y})" aria-hidden="true">'
+        '<path d="M7 15V49C7 65 61 65 61 49V15Z" fill="#92400e"/>'
+        '<ellipse cx="34" cy="15" rx="27" ry="13" fill="#fcd9a5" stroke="#92400e" stroke-width="2"/>'
+        '<ellipse cx="34" cy="15" rx="15" ry="6" fill="none" stroke="#b45309" stroke-width="2"/>'
+        '<path d="M18 33V52M49 33V52" stroke="#b45309" stroke-width="3"/></g>'
     )
+
+
+def forest_icon(x, y, near=False):
+    player = 38 if near else 8
+    return (
+        f'<g transform="translate({x} {y})" aria-hidden="true">'
+        '<path d="M0 98H140" stroke="#a7f3d0" stroke-width="6" stroke-linecap="round"/>'
+        '<rect x="99" y="37" width="15" height="58" fill="#92400e"/>'
+        '<path d="M76 17H136V51H76Z" fill="#059669"/>'
+        '<path d="M86 5H126V32H86Z" fill="#10b981"/>'
+        f'<g transform="translate({player} 0)">'
+        '<rect x="8" y="42" width="16" height="17" rx="3" fill="#6366f1"/>'
+        '<path d="M16 62V80M3 69H29M16 80L6 95M16 80L27 95" '
+        'fill="none" stroke="#4f46e5" stroke-width="5" stroke-linecap="round"/>'
+        '</g></g>'
+    )
+
+
+def opening_task():
     content = (
-        art_label(20, 7, 780, "先确认眼前有什么，再决定下一步做什么", 30, "heading")
-        + tree_scene(focus="start")
-        + art_panel(434, 48, 366, 124, "当前背包：空", "没有原木，也没有工具", "start", "real")
-        + slots
+        tree_scene(20, 40, 500, 280)
+        + art_panel(548, 40, 252, 118, "目标：获得钻石", "最终要收进背包", "goal", "model")
+        + '<path d="M747 113L762 106L777 113L762 141Z" fill="#4f46e5"/>'
+        + art_panel(548, 192, 252, 128, "现在：背包是空的", "没有原木，没有工具", "goal", "real")
+        + "".join(
+            f'<rect x="{566+i*52}" y="280" width="40" height="25" rx="4" fill="#f8fafc" stroke="#cbd5e1"/>'
+            for i in range(4)
+        )
         + '<g class="opening-reveal" data-from="2">'
-        + art_panel(434, 188, 366, 68, "目标：把钻石收进背包", focus="wood", tone="model")
-        + '<path d="M738 209L754 202L770 209L754 238Z" fill="#4f46e5"/>'
-        + art_label(20, 274, 780, "依赖链：后一步需要前一步提供材料与工具", 28)
-        + art_edge("M186 352H218", "wood")
-        + art_edge("M392 352H424", "wood")
-        + art_edge("M598 352H630", "wood")
-        + art_panel(20, 312, 166, 82, "原木", "采集基础材料", "wood", "real")
-        + art_panel(224, 312, 168, 82, "工作台 / 木镐", "再进入石器阶段", "wood")
-        + art_panel(430, 312, 168, 82, "石器 / 铁镐", "采集与烧炼", "wood")
-        + art_panel(636, 312, 164, 82, "钻石", "地下探索后收集", "wood", "model")
-        + '</g><g class="opening-reveal opening-node" data-from="3" data-focus="approach">'
-        '<rect x="20" y="408" width="780" height="30" '
-        'rx="7" fill="#f1f5f9" stroke="#e2e8f0"/>'
-        + art_label(33, 411, 754, "先只做这一步：朝树移动；此时还没有采到原木", 26)
+        + art_panel(20, 353, 780, 76, "眼前先做：靠近树，再采集原木", focus="approach")
+        + wood_icon(716, 359)
         + "</g>"
     )
-    return diagram_card("先明确起点、依赖与成功标准", "Minecraft Diamond",
-                        art_svg(content, "空背包、树前起点及原木到钻石的技术依赖链"),
-                        "教学重绘：起点为假设；技术链压缩展示，不是作者的执行日志。")
+    return diagram_card("先拿原木，才谈得上钻石", "Minecraft Diamond",
+                        art_svg(content, "同一个Minecraft玩家站在树前，空背包，第一件事是靠近树采集原木"),
+                        "教学示意：假设起点，不是作者的运行截图；原木尚未获得。")
 
 
 def opening_choices():
     content = (
-        art_panel(20, 10, 780, 78, "共同起点：树前、空背包", "只看眼前分数，能判断该往哪走吗？", "same")
-        + art_edge("M410 88V108H203V133", "same")
-        + art_edge("M410 108H617V133", "same")
-        + art_panel(20, 139, 366, 93, "A · 朝树移动", "更接近可采集的位置", "same", "real")
-        + art_panel(434, 139, 366, 93, "B · 离开树游走", "离开眼前的采集位置", "same")
-        + art_label(243, 154, 127, "$r=0$", 36, "score")
-        + art_label(657, 154, 127, "$r=0$", 36, "score")
-        + '<g aria-hidden="true">'
-        '<rect x="345" y="196" width="7" height="28" fill="#92400e"/>'
-        '<path d="M336 187H361V204H336Z" fill="#059669"/>'
-        '<circle cx="305" cy="202" r="5" fill="#6366f1"/>'
-        '<path d="M305 209V219M298 214H312M305 219L300 226M305 219L310 226" '
-        'stroke="#6366f1" stroke-width="3" stroke-linecap="round"/>'
-        '<path d="M318 211H335M331 207L335 211L331 215" fill="none" stroke="#4f46e5" stroke-width="2"/>'
-        '<rect x="694" y="196" width="7" height="28" fill="#92400e"/>'
-        '<path d="M685 187H710V204H685Z" fill="#059669"/>'
-        '<circle cx="752" cy="202" r="5" fill="#6366f1"/>'
-        '<path d="M752 209V219M745 214H759M752 219L747 226M752 219L757 226" '
-        'stroke="#6366f1" stroke-width="3" stroke-linecap="round"/>'
-        '<path d="M717 211H737M733 207L737 211L733 215" fill="none" stroke="#4f46e5" stroke-width="2"/>'
-        '</g>'
+        art_label(20, 27, 780, "还是刚才的玩家：靠近树，再采集原木", 32, "heading")
+        + art_panel(20, 86, 232, 236, "朝树移动", focus="now")
+        + forest_icon(64, 142)
+        + art_label(36, 272, 200, "本步奖励 $0$", 34, "heading")
         + '<g class="opening-reveal" data-from="2">'
-        + art_edge("M203 232V270", "later", "#4f46e5")
-        + art_edge("M617 232V270", "later", dashed=True)
-        + art_panel(20, 278, 366, 85, "随后还要采集、拾取", "靠近只是准备，不等于已经采到", "later", "real")
-        + art_panel(434, 278, 366, 85, "随后会遇到什么？", "取决于后续行动，不能只凭零分断言", "later")
-        + '</g><g class="opening-reveal opening-node" data-from="3" data-focus="credit">'
-        '<rect x="20" y="386" width="780" height="52" rx="10" fill="#fffbeb" stroke="#fde68a"/>'
-        + art_label(34, 397, 750,
-                    "现在：移动，$r=0$　→　以后：首次获得原木，$+1$", 32)
+        + art_edge("M254 202H286", "later")
+        + art_panel(294, 86, 232, 236, "继续采集", focus="later")
+        + forest_icon(338, 142, near=True)
+        + art_label(310, 272, 200, "还没获得原木", 34)
+        + art_edge("M528 202H560", "later")
+        + art_panel(568, 86, 232, 236, "首次获得原木", focus="later", tone="real")
+        + '<rect x="625" y="144" width="118" height="100" rx="12" fill="#f8fafc" stroke="#cbd5e1"/>'
+        + wood_icon(650, 163)
+        + art_label(584, 272, 200, "里程碑奖励 $+1$", 34, "heading")
+        + art_label(20, 369, 780, "难点：奖励来得晚，前面的动作却要先选对。", 36, "heading")
         + "</g>"
     )
-    return diagram_card("即时奖励相同，不代表未来机会相同", "教学对照 · 不是搜索树",
-                        art_svg(content, "两个零即时奖励动作，以及后续采集与首次奖励的区别"),
-                        "教学对照，非搜索树。12 种里程碑物品每局首次各得 $+1$；重复采集仍可能有用，但无新增里程碑奖励。")
+    return diagram_card("零分不等于没用", "同一段采木头的过程",
+                        art_svg(content, "一条假设时间线：先朝树移动，之后采集，首次拿到原木时才得到里程碑奖励"),
+                        "假设过程，非执行日志；本例没有生命变化，首次原木奖励才出现。")
 
 
 def opening_loop():
-    content = (
-        '<rect x="8" y="8" width="804" height="176" rx="14" fill="#f8fafc" stroke="#e2e8f0"/>'
-        + art_label(22, 16, 770, "先学世界：真实结果提供训练依据", 28, "heading")
-        + art_edge("M252 112H286", "real")
-        + art_edge("M524 112H560", "real")
-        + art_panel(22, 61, 230, 108, "真实环境", "移动后返回观测与奖励", "real", "real")
-        + art_panel(294, 61, 230, 108, "回放经验 Replay", "保存观测、动作与奖励", "real", "real")
-        + art_panel(568, 61, 230, 108, "世界模型", "学习动作之后发生什么", "real", "model")
-        + '<g class="opening-reveal" data-from="2">'
-        + art_edge("M409 184V226", "imagine", "#4f46e5")
-        + '<rect x="8" y="235" width="804" height="125" rx="14" fill="#eef2ff" stroke="#c7d2fe"/>'
-        + art_label(22, 241, 770, "再练行动：从真实起点出发，用已学模型预测后续", 28, "heading")
-        + art_panel(22, 283, 170, 61, "真实起点", focus="imagine", tone="real")
-        + art_panel(242, 283, 229, 61, "Actor + 世界模型", focus="imagine", tone="model")
-        + art_panel(522, 283, 276, 61, "预测状态 / 奖励 / 继续", focus="imagine", tone="model")
-        + art_edge("M194 313H234", "imagine", "#4f46e5")
-        + art_edge("M473 313H514", "imagine", "#4f46e5")
-        + '</g><g class="opening-reveal" data-from="3">'
-        + art_edge("M660 360V386H423", "learn", "#4f46e5")
-        + art_panel(202, 376, 214, 62, "Critic 估计未来收益", focus="learn", tone="model")
-        + art_panel(22, 376, 166, 62, "改进 Actor", focus="learn", tone="model")
-        + art_edge("M200 407H190", "learn", "#4f46e5")
-        + art_edge("M18 399H3V202H137V174", "learn", "#4f46e5")
-        + art_label(456, 389, 340, "改好策略，再回环境行动", 44)
-        + "</g>"
-    )
-    return diagram_card("把后续收益变成策略的学习信号", "训练与行动分两条线",
-                        art_svg(content, "真实经验训练世界模型，想象轨迹与Critic帮助改进Actor，再回到环境行动"),
-                        "流程为教学抽象：三类网络交替更新；想象训练时冻结世界模型参数。")
+    content = ""
+    for step, y, heading, detail, focus in [
+        (1, 12, "先真的试过", "记录靠近树、采集后的真实结果", "real"),
+        (2, 166, "再用世界模型练习", "预测：继续采集后，会不会得到原木？", "imagine"),
+        (3, 320, "带着改进后的策略回去行动", "在游戏里选动作，再接收真实反馈", "act"),
+    ]:
+        if step > 1:
+            content += f'<g class="opening-reveal" data-from="{step}">'
+            content += art_edge(f"M410 {y-42}V{y-8}", focus)
+        fill, stroke = ("#eef2ff", "#c7d2fe") if step == 2 else ("#ecfdf5", "#a7f3d0")
+        icon = forest_icon(56, y+5, near=step == 3)
+        if step == 2:
+            icon = (
+                f'<rect x="61" y="{y+17}" width="125" height="78" rx="16" '
+                'fill="#fff" stroke="#6366f1" stroke-width="2" stroke-dasharray="6 5"/>'
+                + wood_icon(89, y+27)
+            )
+        content += (
+            f'<g class="opening-node" {target(focus)}>'
+            f'<rect x="20" y="{y}" width="780" height="112" rx="14" '
+            f'fill="{fill}" stroke="{stroke}" stroke-width="1.5"/>'
+            + icon
+            + art_label(218, y+18, 548, heading, 32, "heading")
+            + art_label(218, y+62, 548, detail, 32)
+            + "</g>"
+        )
+        if step > 1:
+            content += "</g>"
+    return diagram_card("先学会预测，再在模型里练习", "DreamerV3 的直觉",
+                        art_svg(content, "三个简单阶段：真实游戏提供经验，世界模型预测采集结果，改进后的策略回到游戏行动"),
+                        "教学示意：模型练习从已有真实经验出发，不再访问游戏；预测不等于事实。")
 
 
 def opening_state():
@@ -455,34 +456,32 @@ def make_slides():
         "方向键翻页；↓ / ↑ 走读；M 目录；F 全屏。原图可点击缩放。主案例与数值计算均明确标记教学身份。",
         cls="dreamer-route")
 
-    add("任务起点", "Minecraft Diamond：目标是钻石，眼前却只有一棵树",
-        "任务要真正把钻石收进背包。假设我们站在树前，背包还是空的；先从这个尚未采集的起点，找出下一步能做什么。",
+    add("任务起点", "Minecraft：先拿到原木，才谈得上钻石",
+        "目标是把钻石收进背包。现在背包是空的，面前有一棵树；第一件事不是挖钻石，而是取得原木。",
         walk(opening_task(), [
-            ("先看起点：树在眼前，原木还没到手", "看见资源不等于持有资源。背包里没有原木和工具；要先接近树，才谈得上采集和制作。", "start"),
-            ("再看依赖：钻石之前，要做许多准备", "原木用于制作木板、工作台和木镐，再逐步进入石器与铁器阶段。图中压缩了重复采集和中间配方；探索途中还必须维持生存。", "wood"),
-            ("现在只推进一步：先朝树移动", "这一步只改变位置，还没有获得原木，更没有完成任务。先盯住这个准备动作：如果环境没给奖励，怎样知道它有没有用？", "approach"),
-        ], summary="下一页先看这一步的即时反馈，而不是整段任务的成败。", interval=9000),
-        "来源：Introduction / Results，PDF 2、10；Methods—Minecraft，PDF 22。教学假设；死亡或达到 36,000 步结束一局。",
+            ("最终要做什么？", "获得钻石。要先取得材料、制作工具，才能逐步往地下探索；不是开局就能挖到钻石。", "goal"),
+            ("眼前先做什么？", "靠近树、采集原木。先把镜头停在“朝树移动”这一步：它还没有让背包里多出东西。", "approach"),
+        ], interval=9000),
+        "来源：Minecraft Diamond 任务与奖励，PDF 2、22。树前起点为教学假设。",
         cls="dreamer-opening opening-paced")
 
-    add("任务困难", "朝树移动，眼前还是零分：有用的准备动作怎样学？",
-        "延续刚才的第一步：还没采到原木，只改变了位置。拿“朝树移动”与“离开树”作教学对照，看看即时反馈漏掉了什么。",
+    add("任务困难", "靠近树很有用，为什么眼前还是零分？",
+        "靠近树是有用的准备，却不一定立即得分。看一段假设过程：奖励出现在后面，动作却从前面就要选对。",
         walk(opening_choices(), [
-            ("停在本步：两个动作都可能没有奖励", "假设没有获得新物品，也没有生命变化，A/B 的即时奖励都是零。零分只说明“现在没得分”，不能说明这个动作对以后没用。", "same"),
-            ("往后看：靠近为采集创造了条件", "沿 A 还要继续采集和拾取，才可能得到原木；位置变化只是准备。B 的后果也取决于后续行动，不能仅凭当前零分就断言整条路线失败。", "later"),
-            ("学习要补上：从后来收益看现在的动作", "原木的奖励在真正获得时才出现，准备动作却发生得更早。要学会这种动作，需要把后续收益带回现在，而不只是比较本步的两个零分。", "credit"),
-        ], summary="DreamerV3 的切入点：用模型提供后续练习，再把预测回报用于学习动作选择。", interval=9000),
-        "来源：Methods—Minecraft，PDF 22。A/B 与零奖励均为教学假设；另有生命变化每颗心 $\\pm0.01$。",
+            ("走近一步，还没拿到东西", "没有新物品、也没有生命变化时，环境可以不给分。但这一步让接下来的采集成为可能。", "now"),
+            ("拿到原木，奖励才出现", "首次获得原木才得到里程碑奖励。学习必须把后来的收益，也联系到前面的准备动作。", "later"),
+        ], interval=9000),
+        "来源：Methods—Minecraft，PDF 22。奖励规则来自论文，动作顺序为教学假设。",
         cls="dreamer-opening opening-paced")
 
-    add("方法总览", "先用真实经验学世界，再在想象中学行动",
-        "刚才的问题是：准备动作眼前不得分，怎样学会它有用？DreamerV3 把真实经验变成练习场，让策略在预测的后续里学习，再回到环境行动。",
+    add("方法直觉", "DreamerV3：先学会预测，再在模型里练习",
+        "不必每次都在真实游戏里试错：先学一个能预测动作后果的世界模型，再用这个模型训练选动作的策略。",
         walk(opening_loop(), [
-            ("先学世界：真实结果是模型的训练依据", "朝树移动后，把新画面、动作和奖励存入 Replay（回放缓冲区）。世界模型据此学习动作后果；只有真实经验能纠正预测。", "real"),
-            ("再练行动：从真实起点，预测一段后续", "从 Replay 编码的状态启动，Actor（策略网络）提出动作，世界模型预测后继、奖励和继续概率。不再访问游戏，也不必生成每一步的图片。", "imagine"),
-            ("改好策略：让未来收益影响动作选择", "Critic 是估计未来收益的价值网络，帮助 Actor 学习动作选择。用想象回报训练二者后，Actor 回到环境直接抽样行动，不临时搜索。", "learn"),
-        ], summary="接着对照论文原图：哪里读真实输入，哪里只用模型预测？", interval=9000),
-        "来源：Learning algorithm / Critic learning，PDF 3、5；Figure 3。教学流程图不表示逐步同步的工程调度。",
+            ("先学会预测", "用真实经验训练世界模型：做了某个动作之后，画面、背包和奖励怎样变化。", "real"),
+            ("再让策略在模型里练", "策略负责选动作，世界模型负责预测结果。利用预测的后续收益，策略学习哪些动作更值得做。", "imagine"),
+            ("最后回到游戏里做", "更新后的策略直接选择真实动作，不临时搜索一条路线。游戏的新反馈再用来改进模型。", "act"),
+        ], interval=9000),
+        "来源：Learning algorithm，PDF 3–5；Figure 3。先讲直觉，网络与更新细节随后展开。",
         cls="dreamer-opening opening-paced")
 
     add("论文框架原图", "Figure 3：真实输入只在左侧逐步出现",
@@ -999,8 +998,8 @@ CSS = r"""
 .dreamer-opening [data-current-step="1"] .opening-reveal[data-from="3"],
 .dreamer-opening [data-current-step="2"] .opening-reveal[data-from="3"] { opacity:0;visibility:hidden; }
 .dreamer-opening .opening-player { transition:transform .65s ease; }
-.dreamer-opening[data-page="3"] [data-current-step="3"] .opening-player { transform:translate(40px,-13px); }
-.dreamer-opening[data-page="3"] [data-current-step="3"] .opening-approach { animation:opening-march 1.2s linear 2; }
+.dreamer-opening[data-page="3"] [data-current-step="2"] .opening-player { transform:translate(40px,-13px); }
+.dreamer-opening[data-page="3"] [data-current-step="2"] .opening-approach { animation:opening-march 1.2s linear 2; }
 .dreamer-opening .opening-paper-route { display:flex;align-items:center;gap:10px; }
 .dreamer-opening .opening-paper-route > span { flex:1;min-width:0;padding:10px 8px;text-align:center;border:1px solid transparent;border-radius:10px;color:#475569;font-size:17.2px;line-height:1.5; }
 .dreamer-opening .opening-paper-route > i { color:#94a3b8;font-style:normal; }

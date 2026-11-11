@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Agent 论文精读 · 推理、评测、记忆、上下文与世界模型</title>
-  <meta name="description" content="18 篇 Agent 与世界模型论文的中文交互式精读，按推理与行动、评测与可靠性、记忆系统、上下文工程、世界模型五组组织；从具体问题出发，对照方法、实验与原始证据。">
+  <meta name="description" content="19 篇 Agent 与世界模型论文的中文交互式精读，按推理与行动、评测与可靠性、记忆系统、上下文工程、世界模型五组组织；从具体问题出发，对照方法、实验与原始证据。">
   <style>
     :root {
       color-scheme: light;
@@ -194,9 +194,9 @@
       <div>
         <p class="eyebrow">从一个具体问题，读懂一篇论文</p>
         <h1>Agent <span>论文精读</span></h1>
-        <p class="intro">从一次行动怎样做，到长期经验怎样用，再到世界模型怎样预测与交互：按推理与行动、评测与可靠性、记忆系统、上下文工程、世界模型五组阅读这 18 篇论文。每篇先交代具体问题，再拆方法与实验，最后回到原始证据。</p>
+        <p class="intro">从一次行动怎样做，到长期经验怎样用，再到世界模型怎样预测与交互：按推理与行动、评测与可靠性、记忆系统、上下文工程、世界模型五组阅读这 19 篇论文。每篇先交代具体问题，再拆方法与实验，最后回到原始证据。</p>
         <dl class="collection-stats">
-          <div><dt>18</dt><dd>篇中文精读</dd></div>
+          <div><dt>19</dt><dd>篇中文精读</dd></div>
           <div><dt>05</dt><dd>组阅读主题</dd></div>
           <div><dt>原文</dt><dd>图表与证据核查</dd></div>
         </dl>
@@ -209,7 +209,7 @@
           <a class="map-link" href="#topic-evaluation"><span class="map-number" aria-hidden="true">02</span><span class="map-label">评测与可靠性<small>3 篇 · 交互、协作与稳定性</small></span><span class="map-arrow" aria-hidden="true">↗</span></a>
           <a class="map-link" href="#topic-memory"><span class="map-number" aria-hidden="true">03</span><span class="map-label">记忆系统<small>5 篇 · 存储、组织与召回</small></span><span class="map-arrow" aria-hidden="true">↗</span></a>
           <a class="map-link" href="#topic-context"><span class="map-number" aria-hidden="true">04</span><span class="map-label">上下文工程<small>4 篇 · 评测、个性化与经验</small></span><span class="map-arrow" aria-hidden="true">↗</span></a>
-          <a class="map-link" href="#topic-world-models"><span class="map-number" aria-hidden="true">05</span><span class="map-label">世界模型<small>1 篇 · 预测、想象与策略学习</small></span><span class="map-arrow" aria-hidden="true">↗</span></a>
+          <a class="map-link" href="#topic-world-models"><span class="map-number" aria-hidden="true">05</span><span class="map-label">世界模型<small>2 篇 · 想象学习、视频与交互</small></span><span class="map-arrow" aria-hidden="true">↗</span></a>
         </nav>
       </aside>
     </div>
@@ -469,8 +469,8 @@
         </div>
       </section>
       <section data-group="world-models" aria-labelledby="topic-world-models">
-        <header class="topic-header"><div><p class="topic-kicker">05 / WORLD MODELS</p><h2 id="topic-world-models">学会预测动作后果，怎样帮助行动与交互？</h2></div><span class="topic-count">1 篇精读</span></header>
-        <p class="topic-intro">DreamerV3 从真实经验学习世界模型，在想象中训练策略，再回到环境行动。重点分清真实观测、模型预测与策略学习，避免把想象成功当成真实成功。</p>
+        <header class="topic-header"><div><p class="topic-kicker">05 / WORLD MODELS</p><h2 id="topic-world-models">学会预测动作后果，怎样帮助行动与交互？</h2></div><span class="topic-count">2 篇精读</span></header>
+        <p class="topic-intro">DreamerV3 从真实经验学习世界模型，在想象中训练策略，再回到环境行动；Genie 从视频学习潜在动作，生成可交互环境。重点分清真实观测、模型预测与策略学习，避免把想象成功当成真实成功。</p>
         <div class="paper-grid">
           <a href="./dreamerv3.html">
             <div class="paper-visual" aria-hidden="true">
@@ -490,6 +490,25 @@
             </div>
             <strong>R51 - DreamerV3</strong>
             <span>空背包怎样走到钻石？沿 Minecraft 案例拆开世界模型、想象轨迹与 Actor–Critic 学习，再核对跨领域固定配方，以及“曾找到钻石”与单局成功率的区别。</span>
+          </a>
+          <a href="./genie.html">
+            <div class="paper-visual" aria-hidden="true">
+              <svg viewBox="0 0 300 108">
+                <rect class="v-paper" x="16" y="23" width="65" height="52" rx="7"/>
+                <path class="v-dim" d="M24 65h24m14 0h11m-34-13 8-13 12 13"/>
+                <circle class="v-accent" cx="39" cy="42" r="4"/>
+                <path d="M89 49h25m-6-5 6 5-6 5"/>
+                <rect class="v-soft" x="121" y="24" width="59" height="48" rx="8"/>
+                <path d="M132 39h37m-37 12h23m-23 12h37"/>
+                <path d="M189 49h25m-6-5 6 5-6 5"/>
+                <rect class="v-paper" x="221" y="23" width="63" height="52" rx="7"/>
+                <path d="M228 65h23m13 0h12m-31-18 9-11 12 11"/>
+                <circle class="v-accent" cx="248" cy="35" r="4"/>
+                <text x="49" y="101">视频画面</text><text x="151" y="101">潜在动作</text><text x="252" y="101">预测下一帧</text>
+              </svg>
+            </div>
+            <strong>R52 - Genie</strong>
+            <span>只看角色移动、不知道玩家按键，怎样学出可操作的世界？沿平台跳跃案例拆开动作瓶颈、视频 tokenizer 与动力学模型，再用 CoinRun 检查动作能否迁移。</span>
           </a>
         </div>
       </section>
