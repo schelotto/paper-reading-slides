@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Agent 论文精读 · 推理、评测、记忆、上下文与世界模型</title>
-  <meta name="description" content="19 篇 Agent 与世界模型论文的中文交互式精读，按推理与行动、评测与可靠性、记忆系统、上下文工程、世界模型五组组织；从具体问题出发，对照方法、实验与原始证据。">
+  <title>Agent 论文精读 · 推理、评测、记忆、上下文、世界模型与社会模拟</title>
+  <meta name="description" content="28 篇 Agent 与世界模型论文的中文交互式精读，按推理与行动、评测与可靠性、记忆系统、上下文工程、世界模型、社会模拟与角色扮演六组组织，涵盖 ReasoningBank、Evolving Orchestration、MetaGPT、SOTOPIA 系列与 Agentopia。">
   <style>
     :root {
       color-scheme: light;
@@ -66,10 +66,11 @@
     }
     .map-link:hover { background: #f1f3fa; }
     .map-number { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 10px; background: #eeedff; color: var(--indigo); font-size: 12px; font-weight: 700; }
-    .map-link:nth-child(2) .map-number { background: #fff2df; color: #a64b0b; }
-    .map-link:nth-child(3) .map-number { background: #e3f7ef; color: #047857; }
-    .map-link:nth-child(4) .map-number { background: #e0f2fe; color: #0369a1; }
-    .map-link:nth-child(5) .map-number { background: #f3e8ff; color: #7e22ce; }
+    .map-link[href="#topic-evaluation"] .map-number { background: #fff2df; color: #a64b0b; }
+    .map-link[href="#topic-memory"] .map-number { background: #e3f7ef; color: #047857; }
+    .map-link[href="#topic-context"] .map-number { background: #e0f2fe; color: #0369a1; }
+    .map-link[href="#topic-world-models"] .map-number { background: #f3e8ff; color: #7e22ce; }
+    .map-link[href="#topic-social"] .map-number { background: #fff1f2; color: #9f1239; }
     .map-label { font-size: 14px; font-weight: 650; line-height: 1.5; }
     .map-label small { display: block; margin-top: 3px; color: var(--muted); font-size: 11px; font-weight: 400; }
     .map-arrow { color: #7a869c; font-size: 17px; }
@@ -77,10 +78,11 @@
     .note-label { flex-shrink: 0; margin-top: 3px; padding: 2px 9px; border-radius: 5px; background: #eeedff; color: var(--indigo); font-size: 11px; font-weight: 700; line-height: 1.7; }
     .collection { display: grid; gap: 64px; margin-top: 62px; }
     .collection section { --topic-color: var(--indigo); --topic-soft: #eeedff; min-width: 0; }
-    .collection section:nth-child(2) { --topic-color: #a64b0b; --topic-soft: #fff2df; }
-    .collection section:nth-child(3) { --topic-color: #047857; --topic-soft: #e3f7ef; }
-    .collection section:nth-child(4) { --topic-color: #0369a1; --topic-soft: #e0f2fe; }
-    .collection section:nth-child(5) { --topic-color: #7e22ce; --topic-soft: #f3e8ff; }
+    .collection section[data-group="evaluation"] { --topic-color: #a64b0b; --topic-soft: #fff2df; }
+    .collection section[data-group="memory"] { --topic-color: #047857; --topic-soft: #e3f7ef; }
+    .collection section[data-group="context"] { --topic-color: #0369a1; --topic-soft: #e0f2fe; }
+    .collection section[data-group="world-models"] { --topic-color: #7e22ce; --topic-soft: #f3e8ff; }
+    .collection section[data-group="social"] { --topic-color: #9f1239; --topic-soft: #fff1f2; }
     .topic-header { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
     .topic-kicker { margin: 0 0 10px; color: var(--topic-color); font-size: 11px; font-weight: 750; letter-spacing: 1.6px; }
     .topic-header h2 { margin: 0; font-size: 25px; font-weight: 750; line-height: 1.5; letter-spacing: -.7px; }
@@ -194,10 +196,10 @@
       <div>
         <p class="eyebrow">从一个具体问题，读懂一篇论文</p>
         <h1>Agent <span>论文精读</span></h1>
-        <p class="intro">从一次行动怎样做，到长期经验怎样用，再到世界模型怎样预测与交互：按推理与行动、评测与可靠性、记忆系统、上下文工程、世界模型五组阅读这 19 篇论文。每篇先交代具体问题，再拆方法与实验，最后回到原始证据。</p>
+        <p class="intro">从一次行动怎样做、长期经验怎样用，到世界模型怎样预测、社会角色怎样互动：按推理与行动、评测与可靠性、记忆系统、上下文工程、世界模型、社会模拟与角色扮演六组阅读这 28 篇论文。每篇先交代具体问题，再拆方法与实验，最后回到原始证据。</p>
         <dl class="collection-stats">
-          <div><dt>19</dt><dd>篇中文精读</dd></div>
-          <div><dt>05</dt><dd>组阅读主题</dd></div>
+          <div><dt>28</dt><dd>篇中文精读</dd></div>
+          <div><dt>06</dt><dd>组阅读主题</dd></div>
           <div><dt>原文</dt><dd>图表与证据核查</dd></div>
         </dl>
       </div>
@@ -205,19 +207,20 @@
         <p class="map-kicker">THE READING MAP</p>
         <h2 id="reading-map-title">选一条线索，开始阅读</h2>
         <nav class="map-links" aria-label="快速跳转到论文主题">
-          <a class="map-link" href="#topic-reasoning"><span class="map-number" aria-hidden="true">01</span><span class="map-label">推理与行动<small>5 篇 · 规划、搜索与工具</small></span><span class="map-arrow" aria-hidden="true">↗</span></a>
-          <a class="map-link" href="#topic-evaluation"><span class="map-number" aria-hidden="true">02</span><span class="map-label">评测与可靠性<small>3 篇 · 交互、协作与稳定性</small></span><span class="map-arrow" aria-hidden="true">↗</span></a>
-          <a class="map-link" href="#topic-memory"><span class="map-number" aria-hidden="true">03</span><span class="map-label">记忆系统<small>5 篇 · 存储、组织与召回</small></span><span class="map-arrow" aria-hidden="true">↗</span></a>
-          <a class="map-link" href="#topic-context"><span class="map-number" aria-hidden="true">04</span><span class="map-label">上下文工程<small>4 篇 · 评测、个性化与经验</small></span><span class="map-arrow" aria-hidden="true">↗</span></a>
-          <a class="map-link" href="#topic-world-models"><span class="map-number" aria-hidden="true">05</span><span class="map-label">世界模型<small>2 篇 · 想象学习、视频与交互</small></span><span class="map-arrow" aria-hidden="true">↗</span></a>
+          <a class="map-link" href="#topic-reasoning"><span class="map-number" aria-hidden="true">01</span><span class="map-label">推理与行动<small>8 篇 · 工具、搜索与动态协作</small></span><span class="map-arrow" aria-hidden="true">↗</span></a>
+          <a class="map-link" href="#topic-evaluation"><span class="map-number" aria-hidden="true">02</span><span class="map-label">评测与可靠性<small>3 篇 · 任务交互与运行可靠性</small></span><span class="map-arrow" aria-hidden="true">↗</span></a>
+          <a class="map-link" href="#topic-memory"><span class="map-number" aria-hidden="true">03</span><span class="map-label">记忆系统<small>6 篇 · 组织、策略与长期记忆评测</small></span><span class="map-arrow" aria-hidden="true">↗</span></a>
+          <a class="map-link" href="#topic-context"><span class="map-number" aria-hidden="true">04</span><span class="map-label">上下文工程<small>2 篇 · 窗口调度与手册演化</small></span><span class="map-arrow" aria-hidden="true">↗</span></a>
+          <a class="map-link" href="#topic-world-models"><span class="map-number" aria-hidden="true">05</span><span class="map-label">世界模型<small>2 篇 · 想象学习与交互生成</small></span><span class="map-arrow" aria-hidden="true">↗</span></a>
+          <a class="map-link" href="#topic-social"><span class="map-number" aria-hidden="true">06</span><span class="map-label">社会模拟与角色扮演<small>7 篇 · 角色评测、互动与社会模拟</small></span><span class="map-arrow" aria-hidden="true">↗</span></a>
         </nav>
       </aside>
     </div>
-    <p class="reading-note"><span class="note-label">如何阅读</span><span>按主题选读，不必按 R 编号顺序阅读。五组分别关注行动怎样产生、效果怎样检验、记忆怎样组织、历史与经验怎样供当前决策使用，以及世界模型怎样预测动作后果。各篇保留原始图表，教学示意与论文结果分别标注。</span></p>
+    <p class="reading-note"><span class="note-label">如何阅读</span><span>按研究对象选读，不必按 R 编号顺序阅读。专项评测与对应方法放在一起，通用交互与可靠性单列一组；同一篇只保留一个入口。组内从基础机制走向扩展方法与证据。初读从 ReAct 开始，再按问题选主题。</span></p>
     <nav class="collection" id="reading-collection" aria-label="按主题组织的论文阅读路线">
       <section data-group="reasoning" aria-labelledby="topic-reasoning">
-        <header class="topic-header"><div><p class="topic-kicker">01 / REASONING</p><h2 id="topic-reasoning">智能体如何思考、规划与使用工具？</h2></div><span class="topic-count">5 篇精读</span></header>
-        <p class="topic-intro">ReAct 把推理、行动和观察连起来，Reflexion 引入文字反思；LATS 与 RAP 进一步比较搜索和内部推演，Toolformer 则学习何时调用外部工具。读这一组，重点分清模型生成的推理、真实环境反馈与训练时的工具学习。</p>
+        <header class="topic-header"><div><p class="topic-kicker">01 / REASONING</p><h2 id="topic-reasoning">智能体如何思考、规划与协作行动？</h2></div><span class="topic-count">8 篇精读</span></header>
+        <p class="topic-intro">先从 ReAct 的推理—行动闭环与 Toolformer 的工具学习入门，再看 Reflexion 如何利用失败反馈；RAP 推演后继状态，LATS 将搜索、评估与反思结合。接着读 Voyager 的开放探索、MetaGPT 的结构化协作，最后用 Evolving Orchestration 对照固定流程与学习得到的动态编排。</p>
         <div class="paper-grid">
           <a href="./react.html">
             <div class="paper-visual" aria-hidden="true">
@@ -233,6 +236,19 @@
             <strong>R1 - ReAct</strong>
             <span>光想不查容易产生幻觉，光做不想又缺乏规划——把“思考、行动、观察”连成闭环，让智能体边查证事实边调整方向。</span>
           </a>
+          <a href="./toolformer.html">
+            <div class="paper-visual" aria-hidden="true">
+              <svg viewBox="0 0 300 108">
+                <path class="v-dim" d="M20 31h58m-58 12h42m-42 12h55m-55 12h33m168-30h55m-55 12h67m-67 12h43"/>
+                <path d="M83 48h29m-6-5 6 5-6 5m62-5h29m-6-5 6 5-6 5"/>
+                <rect class="v-paper" x="124" y="17" width="48" height="62" rx="7"/><rect class="v-soft" x="133" y="26" width="30" height="13" rx="2"/>
+                <path d="M135 49h4m10 0h4m8 0h1m-27 12h4m10 0h4m8 0h1m-27 10h4m10 0h4m8 0h1"/>
+                <path d="m266 68 6 6 11-13"/><text x="47" y="102">采样调用</text><text x="148" y="102">执行工具</text><text x="246" y="102">按损失筛选</text>
+              </svg>
+            </div>
+            <strong>R5 - Toolformer</strong>
+            <span>怎样学会什么时候该调用工具？用少量示例让模型在语料中采样调用，执行后按后续文本的预测损失筛选，再做微调。</span>
+          </a>
           <a href="./reflexion.html">
             <div class="paper-visual" aria-hidden="true">
               <svg viewBox="0 0 300 108">
@@ -246,19 +262,6 @@
             </div>
             <strong>R2 - Reflexion</strong>
             <span>做错了重来一遍，为什么还会踩同一个坑？不用更新模型权重，而是把失败原因写成自然语言“错题本”留在记忆里，指导下一轮尝试。</span>
-          </a>
-          <a href="./lats.html">
-            <div class="paper-visual" aria-hidden="true">
-              <svg viewBox="0 0 300 108">
-                <path class="v-dim" d="m49 48 77-29m-77 29 77 29m14-58 82-8m-82 8 82 24m-82 34 82-13m-82 13 82 7" stroke-dasharray="4 4"/>
-                <path d="M49 48h77m14 0 82-13m-82 13 82 16" stroke-width="3"/>
-                <circle class="v-paper" cx="40" cy="48" r="10"/><circle class="v-paper v-dim" cx="133" cy="19" r="7"/><circle class="v-soft" cx="133" cy="48" r="9"/><circle class="v-paper v-dim" cx="133" cy="77" r="7"/>
-                <circle class="v-paper v-dim" cx="230" cy="11" r="5"/><circle class="v-soft" cx="230" cy="35" r="8"/><circle class="v-paper" cx="230" cy="64" r="7"/><circle class="v-paper v-dim" cx="230" cy="84" r="5"/>
-                <path d="m248 35 6 6 12-15"/><text x="40" y="104">起点</text><text x="133" y="104">候选分支</text><text x="246" y="104">评估与回传</text>
-              </svg>
-            </div>
-            <strong>R3 - Language Agent Tree Search (LATS)</strong>
-            <span>一条检索轨迹走偏了，其他尝试还能留着吗？把蒙特卡洛树搜索、模型价值评估和语言反思结合起来，比较多个候选分支。</span>
           </a>
           <a href="./rap.html">
             <div class="paper-visual" aria-hidden="true">
@@ -274,24 +277,65 @@
             <strong>R4 - Reasoning via Planning (RAP)</strong>
             <span>没法在真实环境里反复试错，怎么办？让大模型同时扮演“推理者”与“内部世界模型”，在脑海中用树搜索推演未来状态与长远回报。</span>
           </a>
-          <a href="./toolformer.html">
+          <a href="./lats.html">
             <div class="paper-visual" aria-hidden="true">
               <svg viewBox="0 0 300 108">
-                <path class="v-dim" d="M20 31h58m-58 12h42m-42 12h55m-55 12h33m168-30h55m-55 12h67m-67 12h43"/>
-                <path d="M83 48h29m-6-5 6 5-6 5m62-5h29m-6-5 6 5-6 5"/>
-                <rect class="v-paper" x="124" y="17" width="48" height="62" rx="7"/><rect class="v-soft" x="133" y="26" width="30" height="13" rx="2"/>
-                <path d="M135 49h4m10 0h4m8 0h1m-27 12h4m10 0h4m8 0h1m-27 10h4m10 0h4m8 0h1"/>
-                <path d="m266 68 6 6 11-13"/><text x="47" y="102">采样调用</text><text x="148" y="102">执行工具</text><text x="246" y="102">按损失筛选</text>
+                <path class="v-dim" d="m49 48 77-29m-77 29 77 29m14-58 82-8m-82 8 82 24m-82 34 82-13m-82 13 82 7" stroke-dasharray="4 4"/>
+                <path d="M49 48h77m14 0 82-13m-82 13 82 16" stroke-width="3"/>
+                <circle class="v-paper" cx="40" cy="48" r="10"/><circle class="v-paper v-dim" cx="133" cy="19" r="7"/><circle class="v-soft" cx="133" cy="48" r="9"/><circle class="v-paper v-dim" cx="133" cy="77" r="7"/>
+                <circle class="v-paper v-dim" cx="230" cy="11" r="5"/><circle class="v-soft" cx="230" cy="35" r="8"/><circle class="v-paper" cx="230" cy="64" r="7"/><circle class="v-paper v-dim" cx="230" cy="84" r="5"/>
+                <path d="m248 35 6 6 12-15"/><text x="40" y="104">起点</text><text x="133" y="104">候选分支</text><text x="246" y="104">评估与回传</text>
               </svg>
             </div>
-            <strong>R5 - Toolformer</strong>
-            <span>怎样学会什么时候该调用工具？用少量示例让模型在语料中采样调用，执行后按后续文本的预测损失筛选，再做微调。</span>
+            <strong>R3 - Language Agent Tree Search (LATS)</strong>
+            <span>一条检索轨迹走偏了，其他尝试还能留着吗？把蒙特卡洛树搜索、模型价值评估和语言反思结合起来，比较多个候选分支。</span>
+          </a>
+          <a href="./voyager.html">
+            <div class="paper-visual" aria-hidden="true">
+              <svg viewBox="0 0 300 108">
+                <path class="v-soft" d="m23 49 20-11 20 11v24L43 84 23 73Z"/><path d="m23 49 20 11 20-11M43 60v24m-6-55 12-12 23 12m-24-9-12 29" stroke-width="3"/>
+                <path class="v-dim" d="M79 49h28m-6-5 6 5-6 5m81-5h27m-6-5 6 5-6 5"/>
+                <rect class="v-paper" x="118" y="21" width="62" height="57" rx="7"/><path d="m135 39-8 10 8 10m28-20 8 10-8 10m-18 4 9-27"/>
+                <rect class="v-paper v-dim" x="231" y="18" width="47" height="48" rx="5"/><rect class="v-paper" x="221" y="29" width="47" height="48" rx="5"/><path d="M231 42h27m-27 11h19m-19 11h27"/>
+                <text x="44" y="104">探索世界</text><text x="149" y="104">编写技能</text><text x="249" y="104">入库复用</text>
+              </svg>
+            </div>
+            <strong>R18 - Voyager</strong>
+            <span>会说铁镐配方，为什么还不能从空背包做出来？在 Minecraft 中按现场状态自动选任务，照着反馈修改执行程序，再把成功技能存成可检索、可组合的代码。</span>
+          </a>
+          <a href="./metagpt.html">
+            <div class="paper-visual" aria-hidden="true">
+              <svg viewBox="0 0 300 108">
+                <rect class="v-paper" x="17" y="16" width="57" height="51" rx="6"/><path d="M29 29h33m-33 11h24m-24 11h29"/>
+                <path class="v-dim" d="M82 42h24m-6-5 6 5-6 5m88-5h24m-6-5 6 5-6 5"/>
+                <rect class="v-soft" x="114" y="16" width="72" height="51" rx="7"/><path d="M126 31h48m-48 12h19m9 0h20m-48 12h48"/>
+                <rect class="v-paper" x="226" y="16" width="57" height="51" rx="6"/><path d="m239 41 9 9 20-23"/>
+                <path d="M254 73v9H150v-9m-5 5 5-5 5 5"/>
+                <text x="46" y="104">需求与设计</text><text x="150" y="104">任务与代码</text><text x="254" y="104">执行反馈</text>
+              </svg>
+            </div>
+            <strong>R19 - MetaGPT</strong>
+            <span>几个角色一起写软件，怎样避免接口各说各话？沿绘图应用追踪五角色的结构化交付、共享消息池与执行反馈，再看单元测试能修好什么、不能保证什么。</span>
+          </a>
+          <a href="./evolving-orchestration.html">
+            <div class="paper-visual" aria-hidden="true">
+              <svg viewBox="0 0 300 108">
+                <rect class="v-soft" x="109" y="10" width="82" height="30" rx="7"/><text x="150" y="30">中央编排</text>
+                <path d="M150 40v12H49v9m101-9v9m0-9h101v9"/>
+                <rect class="v-paper" x="22" y="61" width="54" height="23" rx="6"/><rect class="v-paper" x="123" y="61" width="54" height="23" rx="6"/><rect class="v-paper" x="224" y="61" width="54" height="23" rx="6"/>
+                <text x="49" y="77">推理</text><text x="150" y="77">工具</text><text x="251" y="77">核验</text>
+                <path class="v-dim" d="M278 72h12V25h-91m6-5-6 5 6 5" stroke-dasharray="4 3"/>
+                <text x="150" y="103">按状态选角色 · 按质量与成本更新</text>
+              </svg>
+            </div>
+            <strong>R61 - Evolving Orchestration</strong>
+            <span>多智能体协作一定要走完固定流程吗？中央编排器按当前状态选择下一位角色或结束任务，再用质量与成本回报训练路由，比较动态协作的收益与弱模型下的退步。</span>
           </a>
         </div>
       </section>
       <section data-group="evaluation" aria-labelledby="topic-evaluation">
         <header class="topic-header"><div><p class="topic-kicker">02 / EVALUATION</p><h2 id="topic-evaluation">一次成功之外，怎样检验真实交互中的表现？</h2></div><span class="topic-count">3 篇精读</span></header>
-        <p class="topic-intro">τ-bench 检验对话、工具调用与业务规则下的任务完成，τ²-bench 加入用户也能操作环境的双控制协作；可靠性研究再检查一致性、鲁棒性、可预测性与安全性。关注的不只是某次成功，而是重复运行和条件变化下的表现。</p>
+        <p class="topic-intro">这一组聚焦通用任务交互与运行可靠性：τ-bench 检验对话、工具调用与业务规则下的任务完成，τ²-bench 加入用户也能操作环境的双控制协作；最后用可靠性研究检查重复运行与条件变化下的表现。记忆、角色与社交的专项评测留在对应主题，与被检验的方法一起读。</p>
         <div class="paper-grid">
           <a href="./tau-bench.html">
             <div class="paper-visual" aria-hidden="true">
@@ -336,36 +380,9 @@
         </div>
       </section>
       <section data-group="memory" aria-labelledby="topic-memory">
-        <header class="topic-header"><div><p class="topic-kicker">03 / MEMORY</p><h2 id="topic-memory">怎样存下经历，并在需要时找回？</h2></div><span class="topic-count">5 篇精读</span></header>
-        <p class="topic-intro">Generative Agents 用经历支撑连贯行为，MemGPT 调度有限窗口与外部存储；HippoRAG 用图索引连接跨段证据，Zep 处理事实的时间变化，A-MEM 让记忆关联与语境持续演化。比较它们存什么、怎样组织、何时更新，以及如何召回。</p>
+        <header class="topic-header"><div><p class="topic-kicker">03 / MEMORY</p><h2 id="topic-memory">怎样存下经历，并在需要时找回？</h2></div><span class="topic-count">6 篇精读</span></header>
+        <p class="topic-intro">先看记忆如何组织与使用：HippoRAG 连接跨段证据，Zep 追踪事实的时间变化，A-MEM 维护新旧卡片的关联，ReasoningBank 从成败经历提炼可迁移策略。再用 LongMemEval 检验跨会话记忆，用 PersonaMem 检验动态用户画像能否支持贴合当下的回应，串起“存下什么、怎样找回、是否有用”。</p>
         <div class="paper-grid">
-          <a href="./generative-agents.html">
-            <div class="paper-visual" aria-hidden="true">
-              <svg viewBox="0 0 300 108">
-                <path class="v-dim" d="M18 72h264m-259 0V39l20-15 20 15v33m-31-1V54h14v17m184 1V36l22-16 22 16v36m-33-1V52h17v19"/>
-                <circle class="v-soft" cx="109" cy="49" r="10"/><path d="M94 72v-6a15 15 0 0 1 30 0v6"/>
-                <circle class="v-soft" cx="181" cy="49" r="10"/><path d="M166 72v-6a15 15 0 0 1 30 0v6"/>
-                <path class="v-paper" d="M123 12h49a8 8 0 0 1 8 8v7a8 8 0 0 1-8 8h-25l-11 8v-8h-13a8 8 0 0 1-8-8v-7a8 8 0 0 1 8-8Z"/><path d="M128 23h11m7 0h11m7 0h3"/>
-                <text x="51" y="100">记下经历</text><text x="149" y="100">反思与计划</text><text x="249" y="100">小镇社交</text>
-              </svg>
-            </div>
-            <strong>R10 - Generative Agents</strong>
-            <span>怎样让智能体过上真实可信的日常，而不是机械复读角色设定？用记忆流记下经历、用定期反思提炼高阶洞见、用层级规划安排小镇社交。</span>
-          </a>
-          <a href="./memgpt.html">
-            <div class="paper-visual" aria-hidden="true">
-              <svg viewBox="0 0 300 108">
-                <rect class="v-paper" x="18" y="27" width="43" height="47" rx="5"/><path class="v-dim" d="M26 39h27m-27 10h20m-20 10h27"/>
-                <rect class="v-paper" x="107" y="19" width="85" height="61" rx="8"/><path d="M108 34h83"/><path class="v-dim" d="M116 26h3m5 0h3"/>
-                <rect class="v-soft" x="119" y="43" width="60" height="9" rx="2"/><rect class="v-soft" x="119" y="60" width="36" height="9" rx="2"/>
-                <ellipse class="v-paper" cx="256" cy="31" rx="22" ry="7"/><path d="M234 31v35c0 10 44 10 44 0V31m-44 17c0 10 44 10 44 0"/>
-                <path d="M68 43h31m-6-5 6 5-6 5m6 13H68m6-5-6 5 6 5m126-23h26m-6-5 6 5-6 5m6 13h-26m6-5-6 5 6 5"/>
-                <text x="40" y="102">对话历史</text><text x="149" y="102">有限工作区</text><text x="256" y="102">归档存储</text>
-              </svg>
-            </div>
-            <strong>R11 - MemGPT</strong>
-            <span>历史超过窗口后，怎样留下关键事实并找回旧事？借鉴虚拟内存，让模型用函数调用来管理当前工作区、对话历史和归档存储。</span>
-          </a>
           <a href="./hipporag.html">
             <div class="paper-visual" aria-hidden="true">
               <svg viewBox="0 0 300 108">
@@ -407,12 +424,20 @@
             <strong>R14 - A-MEM</strong>
             <span>新经历来了，旧经历往往也有了新的意义——借鉴卢曼“卡片盒笔记法”，让新记忆入库时自主连接相关旧卡片，并反过来更新旧卡片的语境描述。</span>
           </a>
-        </div>
-      </section>
-      <section data-group="context" aria-labelledby="topic-context">
-        <header class="topic-header"><div><p class="topic-kicker">04 / CONTEXT</p><h2 id="topic-context">怎样让长历史与经验进入下一次决策？</h2></div><span class="topic-count">4 篇精读</span></header>
-        <p class="topic-intro">先用 LongMemEval 和 PersonaMem 检查长历史取用与个性化回应，再看 ACE 的增量行为手册，以及 Voyager 的可检索技能库。共同的问题是：哪些信息值得进入当前上下文，哪些经验能在下一次任务中复用？</p>
-        <div class="paper-grid">
+          <a href="./reasoningbank.html">
+            <div class="paper-visual" aria-hidden="true">
+              <svg viewBox="0 0 300 108">
+                <rect class="v-paper" x="17" y="21" width="57" height="51" rx="6"/><path d="M29 34h33m-33 11h22m-22 11h28"/>
+                <path class="v-dim" d="M82 46h27m-6-5 6 5-6 5m79-5h27m-6-5 6 5-6 5"/>
+                <rect class="v-soft" x="118" y="16" width="64" height="61" rx="7"/><path d="m130 34 5 5 9-12m-14 28 9-9m-9 0 9 9m12-21h19m-19 17h19m-40 14h40"/>
+                <rect class="v-paper" x="225" y="21" width="57" height="51" rx="6"/><path d="m239 45 9 9 20-23"/>
+                <path d="M252 79v8H46v-8m-5 5 5-5 5 5"/>
+                <text x="46" y="103">成败经历</text><text x="150" y="103">策略记忆</text><text x="252" y="103">新任务检验</text>
+              </svg>
+            </div>
+            <strong>R60 - ReasoningBank</strong>
+            <span>保存旧轨迹，为什么还会重犯旧错？从自判成功与失败的经历中提炼策略，供新任务检索；再用 MATTS 比较多路尝试或顺序复查，让更多计算也改善后续记忆。</span>
+          </a>
           <a href="./longmemeval.html">
             <div class="paper-visual" aria-hidden="true">
               <svg viewBox="0 0 300 108">
@@ -439,6 +464,26 @@
             <strong>R17 - Know Me, Respond to Me (PersonaMem)</strong>
             <span>能背出用户的历史设定，就等于懂用户吗？在偏好看起来随时间变化的长期交互里，分清“认出用户画像”与“给出真正贴合当下处境的回应”。</span>
           </a>
+        </div>
+      </section>
+      <section data-group="context" aria-labelledby="topic-context">
+        <header class="topic-header"><div><p class="topic-kicker">04 / CONTEXT</p><h2 id="topic-context">怎样让长历史与经验进入下一次决策？</h2></div><span class="topic-count">2 篇精读</span></header>
+        <p class="topic-intro">MemGPT 解决有限窗口里保留什么、何时从外存调入或调出；ACE 解决任务反馈怎样变成可增量维护的行为手册。两篇分别管理输入容量与经验内容，重点看每次调用实际送给模型的上下文怎样变化。ReasoningBank 放在记忆组，可与 ACE 对照策略如何提炼、检索与更新。</p>
+        <div class="paper-grid">
+          <a href="./memgpt.html">
+            <div class="paper-visual" aria-hidden="true">
+              <svg viewBox="0 0 300 108">
+                <rect class="v-paper" x="18" y="27" width="43" height="47" rx="5"/><path class="v-dim" d="M26 39h27m-27 10h20m-20 10h27"/>
+                <rect class="v-paper" x="107" y="19" width="85" height="61" rx="8"/><path d="M108 34h83"/><path class="v-dim" d="M116 26h3m5 0h3"/>
+                <rect class="v-soft" x="119" y="43" width="60" height="9" rx="2"/><rect class="v-soft" x="119" y="60" width="36" height="9" rx="2"/>
+                <ellipse class="v-paper" cx="256" cy="31" rx="22" ry="7"/><path d="M234 31v35c0 10 44 10 44 0V31m-44 17c0 10 44 10 44 0"/>
+                <path d="M68 43h31m-6-5 6 5-6 5m6 13H68m6-5-6 5 6 5m126-23h26m-6-5 6 5-6 5m6 13h-26m6-5-6 5 6 5"/>
+                <text x="40" y="102">对话历史</text><text x="149" y="102">有限工作区</text><text x="256" y="102">归档存储</text>
+              </svg>
+            </div>
+            <strong>R11 - MemGPT</strong>
+            <span>历史超过窗口后，怎样留下关键事实并找回旧事？借鉴虚拟内存，让模型用函数调用来管理当前工作区、对话历史和归档存储。</span>
+          </a>
           <a href="./ace.html">
             <div class="paper-visual" aria-hidden="true">
               <svg viewBox="0 0 300 108">
@@ -453,24 +498,11 @@
             <strong>R15 - ACE</strong>
             <span>一次失败怎样变成下一次可用的经验？让执行、反思与策展各管一件事，只对行为手册做增量更新，保住具体策略，再看看反馈质量与持续适应的真实代价。</span>
           </a>
-          <a href="./voyager.html">
-            <div class="paper-visual" aria-hidden="true">
-              <svg viewBox="0 0 300 108">
-                <path class="v-soft" d="m23 49 20-11 20 11v24L43 84 23 73Z"/><path d="m23 49 20 11 20-11M43 60v24m-6-55 12-12 23 12m-24-9-12 29" stroke-width="3"/>
-                <path class="v-dim" d="M79 49h28m-6-5 6 5-6 5m81-5h27m-6-5 6 5-6 5"/>
-                <rect class="v-paper" x="118" y="21" width="62" height="57" rx="7"/><path d="m135 39-8 10 8 10m28-20 8 10-8 10m-18 4 9-27"/>
-                <rect class="v-paper v-dim" x="231" y="18" width="47" height="48" rx="5"/><rect class="v-paper" x="221" y="29" width="47" height="48" rx="5"/><path d="M231 42h27m-27 11h19m-19 11h27"/>
-                <text x="44" y="104">探索世界</text><text x="149" y="104">编写技能</text><text x="249" y="104">入库复用</text>
-              </svg>
-            </div>
-            <strong>R18 - Voyager</strong>
-            <span>会说铁镐配方，为什么还不能从空背包做出来？在 Minecraft 中按现场状态自动选任务，照着反馈修改执行程序，再把成功技能存成可检索、可组合的代码。</span>
-          </a>
         </div>
       </section>
       <section data-group="world-models" aria-labelledby="topic-world-models">
         <header class="topic-header"><div><p class="topic-kicker">05 / WORLD MODELS</p><h2 id="topic-world-models">学会预测动作后果，怎样帮助行动与交互？</h2></div><span class="topic-count">2 篇精读</span></header>
-        <p class="topic-intro">DreamerV3 从真实经验学习世界模型，在想象中训练策略，再回到环境行动；Genie 从视频学习潜在动作，生成可交互环境。重点分清真实观测、模型预测与策略学习，避免把想象成功当成真实成功。</p>
+        <p class="topic-intro">先读 DreamerV3：从真实经验学习世界模型，在想象中训练策略，再回到环境行动；再读 Genie：从视频学习潜在动作，生成可交互环境。与推理组的 RAP 对照，区分语言模型内推演、学习得到的环境动力学与真实观测，避免把想象成功当成真实成功。</p>
         <div class="paper-grid">
           <a href="./dreamerv3.html">
             <div class="paper-visual" aria-hidden="true">
@@ -509,6 +541,119 @@
             </div>
             <strong>R52 - Genie</strong>
             <span>只看角色移动、不知道玩家按键，怎样学出可操作的世界？沿平台跳跃案例拆开动作瓶颈、视频 tokenizer 与动力学模型，再用 CoinRun 检查动作能否迁移。</span>
+          </a>
+        </div>
+      </section>
+      <section data-group="social" aria-labelledby="topic-social">
+        <header class="topic-header"><div><p class="topic-kicker">06 / SOCIAL SIMULATION &amp; ROLEPLAY</p><h2 id="topic-social">如何扮演角色、与他人协商，并从互动中学习？</h2></div><span class="topic-count">7 篇精读</span></header>
+        <p class="topic-intro">从 Generative Agents 的小镇生活出发，用 CharacterBench 检查个体是否守住角色设定，再用 SOTOPIA 检验双人互动中的目标与关系。随后读 SOTOPIA-π 与 SOTOPIA-Ω 怎样改进协商策略、Agentopia 怎样扩展到长期社会生活。最后用 LLM Generated Persona 检查群体代表性，区分角色可信、社交目标达成与现实人群模拟。</p>
+        <div class="paper-grid">
+          <a href="./generative-agents.html">
+            <div class="paper-visual" aria-hidden="true">
+              <svg viewBox="0 0 300 108">
+                <path class="v-dim" d="M18 72h264m-259 0V39l20-15 20 15v33m-31-1V54h14v17m184 1V36l22-16 22 16v36m-33-1V52h17v19"/>
+                <circle class="v-soft" cx="109" cy="49" r="10"/><path d="M94 72v-6a15 15 0 0 1 30 0v6"/>
+                <circle class="v-soft" cx="181" cy="49" r="10"/><path d="M166 72v-6a15 15 0 0 1 30 0v6"/>
+                <path class="v-paper" d="M123 12h49a8 8 0 0 1 8 8v7a8 8 0 0 1-8 8h-25l-11 8v-8h-13a8 8 0 0 1-8-8v-7a8 8 0 0 1 8-8Z"/><path d="M128 23h11m7 0h11m7 0h3"/>
+                <text x="51" y="100">记下经历</text><text x="149" y="100">反思与计划</text><text x="249" y="100">小镇社交</text>
+              </svg>
+            </div>
+            <strong>R10 - Generative Agents</strong>
+            <span>怎样让智能体过上真实可信的日常，而不是机械复读角色设定？用记忆流记下经历、用定期反思提炼高阶洞见、用层级规划安排小镇社交。</span>
+          </a>
+          <a href="./characterbench.html">
+            <div class="paper-visual" aria-hidden="true">
+              <svg viewBox="0 0 300 108">
+                <rect class="v-paper" x="18" y="17" width="58" height="56" rx="6"/>
+                <circle class="v-soft" cx="36" cy="32" r="6"/><path d="M27 52v-4a9 9 0 0 1 18 0v4m5-24h16m-16 11h16m-38 23h38"/>
+                <path class="v-dim" d="M85 45h27m-6-5 6 5-6 5m79-5h27m-6-5 6 5-6 5"/>
+                <path class="v-soft" d="M130 20h43a8 8 0 0 1 8 8v28a8 8 0 0 1-8 8h-18l-15 11V64h-10a8 8 0 0 1-8-8V28a8 8 0 0 1 8-8Z"/>
+                <path d="M142 35a10 10 0 0 1 20 0c0 8-10 8-10 17"/><circle class="v-accent" cx="152" cy="58" r="1.7"/>
+                <rect class="v-paper" x="227" y="17" width="56" height="56" rx="6"/><path d="m237 31 4 4 7-9m5 5h20m-36 16h36m-36 12h26"/>
+                <text x="47" y="103">角色设定</text><text x="152" y="103">针对性提问</text><text x="255" y="103">专门评分</text>
+              </svg>
+            </div>
+            <strong>R22 - CharacterBench</strong>
+            <span>只靠闲聊，怎么发现角色忘记旧事、越过知识边界？围绕设定与历史构造针对性追问，用 CharacterJudge 判分，再核对评分与人类的一致性，以及用于训练的收益。</span>
+          </a>
+          <a href="./sotopia.html">
+            <div class="paper-visual" aria-hidden="true">
+              <svg viewBox="0 0 300 108">
+                <circle class="v-paper" cx="38" cy="31" r="11"/><path d="M20 68v-8a18 18 0 0 1 36 0v8"/>
+                <circle class="v-paper" cx="176" cy="31" r="11"/><path d="M158 68v-8a18 18 0 0 1 36 0v8"/>
+                <path d="M66 35h72m-6-5 6 5-6 5m6 15H66m6-5-6 5 6 5"/>
+                <path class="v-dim" d="M205 46h17m-6-5 6 5-6 5"/>
+                <rect class="v-soft" x="231" y="15" width="54" height="56" rx="6"/><path d="M241 29h33m-33 12h24m-24 12h29m-29 10h17"/>
+                <text x="38" y="103">我的目标</text><text x="176" y="103">对方目标</text><text x="258" y="103">七维评审</text>
+              </svg>
+            </div>
+            <strong>R20 - SOTOPIA</strong>
+            <span>聊得自然，就能在社交中达成目标吗？从借毯子失败出发，看两个角色在私有目标与信息限制下互动，再用七个维度分开评估目标、关系与行为代价。</span>
+          </a>
+          <a href="./sotopia-pi.html">
+            <div class="paper-visual" aria-hidden="true">
+              <svg viewBox="0 0 300 108">
+                <rect class="v-paper v-dim" x="26" y="16" width="38" height="48" rx="5"/>
+                <rect class="v-paper" x="17" y="25" width="38" height="48" rx="5"/><path d="M26 37h20m-20 11h14m-14 11h20"/>
+                <path class="v-dim" d="M72 46h31m-6-5 6 5-6 5m94-5h24m-6-5 6 5-6 5"/>
+                <circle class="v-soft" cx="130" cy="30" r="9"/><circle class="v-paper" cx="174" cy="30" r="9"/>
+                <path d="M116 66v-9a14 14 0 0 1 28 0v9m16 0v-9a14 14 0 0 1 28 0v9m-39-36h7m-5-4 5 4-5 4m5 17h-7m5-4-5 4 5 4"/>
+                <rect class="v-soft" x="229" y="20" width="55" height="54" rx="6"/><path d="m239 34 5 5 9-11m-14 23h34m-34 11h25"/>
+                <text x="43" y="103">专家示范</text><text x="152" y="103">自身互动</text><text x="256" y="103">筛选微调</text>
+              </svg>
+            </div>
+            <strong>R57 - SOTOPIA-π</strong>
+            <span>小模型怎样学会协商，而不只礼貌接话？先模仿专家，再筛选自身互动中的高分角色轨迹做离线微调；对照人工评价，检查自动目标评分是否虚高。</span>
+          </a>
+          <a href="./sotopia-omega.html">
+            <div class="paper-visual" aria-hidden="true">
+              <svg viewBox="0 0 300 108">
+                <path class="v-paper" d="M24 22h42a8 8 0 0 1 8 8v23a8 8 0 0 1-8 8H47L34 73V61H24a8 8 0 0 1-8-8V30a8 8 0 0 1 8-8Z"/><path d="M28 37h32m-32 12h22"/>
+                <path class="v-dim" d="M83 45h21m-6-5 6 5-6 5m5 0h14V21h15m-15 24h15m-15 0v24h15m63-48h17v24m-17 0h30m-30 24h17V45m0 0h13m-6-5 6 5-6 5"/>
+                <rect class="v-paper" x="140" y="11" width="52" height="20" rx="5"/><text x="166" y="25">原生</text>
+                <rect class="v-soft" x="140" y="35" width="52" height="20" rx="5"/><text x="166" y="49">换位</text>
+                <rect class="v-paper" x="140" y="59" width="52" height="20" rx="5"/><text x="166" y="73">协商</text>
+                <rect class="v-soft" x="239" y="24" width="47" height="44" rx="8"/><path d="m250 45 7 7 16-18"/>
+                <text x="45" y="103">判断进展</text><text x="166" y="103">动态选策略</text><text x="262" y="103">筛选与训练</text>
+              </svg>
+            </div>
+            <strong>R58 - SOTOPIA-Ω</strong>
+            <span>专家也会陷入客气却无进展的僵局。按当前进展与未来预期切换原生回应、换位提示和四步协商，在数据生成时改善策略，再检查目标收益、表达多样性与人工评分差距。</span>
+          </a>
+          <a href="./agentopia.html">
+            <div class="paper-visual" aria-hidden="true">
+              <svg viewBox="0 0 300 108">
+                <circle class="v-paper" cx="34" cy="28" r="9"/><path d="M19 62v-9a15 15 0 0 1 30 0v9"/>
+                <circle class="v-soft" cx="70" cy="28" r="9"/><path d="M55 62v-9a15 15 0 0 1 30 0v9"/>
+                <path d="M24 71v9h57v-9m-5 5 5-5 5 5"/>
+                <path class="v-dim" d="M92 46h24m-6-5 6 5-6 5m65-5h27m-6-5 6 5-6 5"/>
+                <rect class="v-paper v-dim" x="133" y="16" width="38" height="51" rx="5"/>
+                <rect class="v-paper" x="123" y="25" width="38" height="51" rx="5"/><path d="M132 37h21m-21 11h15m-15 11h21"/>
+                <rect class="v-accent" x="221" y="24" width="12" height="12" rx="2"/>
+                <rect class="v-soft" x="239" y="24" width="12" height="12" rx="2"/>
+                <rect class="v-soft" x="257" y="24" width="12" height="12" rx="2"/>
+                <rect class="v-soft" x="275" y="24" width="12" height="12" rx="2"/>
+                <path d="M227 43v30h13m-6-5 6 5-6 5"/>
+                <rect class="v-paper" x="247" y="65" width="34" height="16" rx="5"/>
+                <text x="52" y="103">跨周互动</text><text x="146" y="103">私有记忆</text><text x="254" y="103">筛选与训练</text>
+              </svg>
+            </div>
+            <strong>R21 - Agentopia</strong>
+            <span>一次体育馆偶遇，怎样走到第六周的协作？沿周循环与私有记忆拆开长期社会模拟，再看年度奖励如何筛选相对自身进步的轨迹用于离线微调，以及社交收益背后的生活代价。</span>
+          </a>
+          <a href="./llm-generated-persona.html">
+            <div class="paper-visual" aria-hidden="true">
+              <svg viewBox="0 0 300 108">
+                <rect class="v-paper" x="18" y="16" width="60" height="55" rx="6"/><path d="M30 30h36m-36 12h25m-25 12h31"/>
+                <path class="v-dim" d="M86 43h26m-6-5 6 5-6 5m79-5h26m-6-5 6 5-6 5"/>
+                <circle class="v-soft" cx="139" cy="31" r="9"/><circle class="v-paper" cx="169" cy="31" r="9"/>
+                <path d="M125 66V57a14 14 0 0 1 28 0v9m2 0V57a14 14 0 0 1 28 0v9"/>
+                <rect class="v-paper" x="227" y="16" width="55" height="55" rx="6"/><path d="M238 59h32m-28 0V41m11 18V29m11 30V36"/>
+                <text x="48" y="103">生成档案</text><text x="154" y="103">模拟回答</text><text x="254" y="103">核查代表性</text>
+              </svg>
+            </div>
+            <strong>R55 - LLM Generated Persona</strong>
+            <span>人物档案写得像真人，组成的人群就能代表现实吗？分开检验档案生成与回答模拟，对照选举和问卷数据，看更多细节为什么反而可能带来更大偏移。</span>
           </a>
         </div>
       </section>
