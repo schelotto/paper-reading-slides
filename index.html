@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Agent 论文精读 · 推理、评测、记忆与上下文</title>
-  <meta name="description" content="17 篇 Agent 论文的中文交互式精读，按推理与行动、评测与可靠性、记忆系统、上下文工程四组组织；从具体问题出发，对照方法、实验与原始证据。">
+  <title>Agent 论文精读 · 推理、评测、记忆、上下文与世界模型</title>
+  <meta name="description" content="18 篇 Agent 与世界模型论文的中文交互式精读，按推理与行动、评测与可靠性、记忆系统、上下文工程、世界模型五组组织；从具体问题出发，对照方法、实验与原始证据。">
   <style>
     :root {
       color-scheme: light;
@@ -69,6 +69,7 @@
     .map-link:nth-child(2) .map-number { background: #fff2df; color: #a64b0b; }
     .map-link:nth-child(3) .map-number { background: #e3f7ef; color: #047857; }
     .map-link:nth-child(4) .map-number { background: #e0f2fe; color: #0369a1; }
+    .map-link:nth-child(5) .map-number { background: #f3e8ff; color: #7e22ce; }
     .map-label { font-size: 14px; font-weight: 650; line-height: 1.5; }
     .map-label small { display: block; margin-top: 3px; color: var(--muted); font-size: 11px; font-weight: 400; }
     .map-arrow { color: #7a869c; font-size: 17px; }
@@ -79,6 +80,7 @@
     .collection section:nth-child(2) { --topic-color: #a64b0b; --topic-soft: #fff2df; }
     .collection section:nth-child(3) { --topic-color: #047857; --topic-soft: #e3f7ef; }
     .collection section:nth-child(4) { --topic-color: #0369a1; --topic-soft: #e0f2fe; }
+    .collection section:nth-child(5) { --topic-color: #7e22ce; --topic-soft: #f3e8ff; }
     .topic-header { display: flex; justify-content: space-between; align-items: center; gap: 24px; }
     .topic-kicker { margin: 0 0 10px; color: var(--topic-color); font-size: 11px; font-weight: 750; letter-spacing: 1.6px; }
     .topic-header h2 { margin: 0; font-size: 25px; font-weight: 750; line-height: 1.5; letter-spacing: -.7px; }
@@ -192,10 +194,10 @@
       <div>
         <p class="eyebrow">从一个具体问题，读懂一篇论文</p>
         <h1>Agent <span>论文精读</span></h1>
-        <p class="intro">从一次行动怎样做，到长期经验怎样用：按推理与行动、评测与可靠性、记忆系统、上下文工程四组阅读这 17 篇论文。每篇先交代具体问题，再拆方法与实验，最后回到原始证据。</p>
+        <p class="intro">从一次行动怎样做，到长期经验怎样用，再到世界模型怎样预测与交互：按推理与行动、评测与可靠性、记忆系统、上下文工程、世界模型五组阅读这 18 篇论文。每篇先交代具体问题，再拆方法与实验，最后回到原始证据。</p>
         <dl class="collection-stats">
-          <div><dt>17</dt><dd>篇中文精读</dd></div>
-          <div><dt>04</dt><dd>组阅读主题</dd></div>
+          <div><dt>18</dt><dd>篇中文精读</dd></div>
+          <div><dt>05</dt><dd>组阅读主题</dd></div>
           <div><dt>原文</dt><dd>图表与证据核查</dd></div>
         </dl>
       </div>
@@ -207,10 +209,11 @@
           <a class="map-link" href="#topic-evaluation"><span class="map-number" aria-hidden="true">02</span><span class="map-label">评测与可靠性<small>3 篇 · 交互、协作与稳定性</small></span><span class="map-arrow" aria-hidden="true">↗</span></a>
           <a class="map-link" href="#topic-memory"><span class="map-number" aria-hidden="true">03</span><span class="map-label">记忆系统<small>5 篇 · 存储、组织与召回</small></span><span class="map-arrow" aria-hidden="true">↗</span></a>
           <a class="map-link" href="#topic-context"><span class="map-number" aria-hidden="true">04</span><span class="map-label">上下文工程<small>4 篇 · 评测、个性化与经验</small></span><span class="map-arrow" aria-hidden="true">↗</span></a>
+          <a class="map-link" href="#topic-world-models"><span class="map-number" aria-hidden="true">05</span><span class="map-label">世界模型<small>1 篇 · 预测、想象与策略学习</small></span><span class="map-arrow" aria-hidden="true">↗</span></a>
         </nav>
       </aside>
     </div>
-    <p class="reading-note"><span class="note-label">如何阅读</span><span>按主题选读，不必按 R 编号顺序阅读。四组分别关注行动怎样产生、效果怎样检验、记忆怎样组织，以及历史与经验怎样供当前决策使用。各篇附录保留原始图表，教学示意与论文结果分别标注。</span></p>
+    <p class="reading-note"><span class="note-label">如何阅读</span><span>按主题选读，不必按 R 编号顺序阅读。五组分别关注行动怎样产生、效果怎样检验、记忆怎样组织、历史与经验怎样供当前决策使用，以及世界模型怎样预测动作后果。各篇保留原始图表，教学示意与论文结果分别标注。</span></p>
     <nav class="collection" id="reading-collection" aria-label="按主题组织的论文阅读路线">
       <section data-group="reasoning" aria-labelledby="topic-reasoning">
         <header class="topic-header"><div><p class="topic-kicker">01 / REASONING</p><h2 id="topic-reasoning">智能体如何思考、规划与使用工具？</h2></div><span class="topic-count">5 篇精读</span></header>
@@ -462,6 +465,31 @@
             </div>
             <strong>R18 - Voyager</strong>
             <span>会说铁镐配方，为什么还不能从空背包做出来？在 Minecraft 中按现场状态自动选任务，照着反馈修改执行程序，再把成功技能存成可检索、可组合的代码。</span>
+          </a>
+        </div>
+      </section>
+      <section data-group="world-models" aria-labelledby="topic-world-models">
+        <header class="topic-header"><div><p class="topic-kicker">05 / WORLD MODELS</p><h2 id="topic-world-models">学会预测动作后果，怎样帮助行动与交互？</h2></div><span class="topic-count">1 篇精读</span></header>
+        <p class="topic-intro">DreamerV3 从真实经验学习世界模型，在想象中训练策略，再回到环境行动。重点分清真实观测、模型预测与策略学习，避免把想象成功当成真实成功。</p>
+        <div class="paper-grid">
+          <a href="./dreamerv3.html">
+            <div class="paper-visual" aria-hidden="true">
+              <svg viewBox="0 0 300 108">
+                <rect class="v-paper" x="13" y="21" width="73" height="51" rx="8"/>
+                <path d="M37 59V39m-9 4h18m-14-9h10m-5 25h20"/>
+                <path class="v-dim" d="M94 46h24m-6-5 6 5-6 5"/>
+                <rect class="v-soft" x="125" y="21" width="65" height="51" rx="8"/>
+                <circle cx="145" cy="40" r="5"/><circle cx="171" cy="53" r="5"/>
+                <path d="m150 42 16 8m-8-7 8 7-10 1"/>
+                <path class="v-dim" d="M198 46h24m-6-5 6 5-6 5"/>
+                <rect class="v-paper" x="229" y="21" width="58" height="51" rx="8"/>
+                <path d="m247 38 11-5 11 5-11 20Z"/>
+                <path d="M258 78v8H49v-8m-5 5 5-5 5 5"/>
+                <text x="49" y="103">真实经验</text><text x="157" y="103">想象练习</text><text x="258" y="103">策略行动</text>
+              </svg>
+            </div>
+            <strong>R51 - DreamerV3</strong>
+            <span>空背包怎样走到钻石？沿 Minecraft 案例拆开世界模型、想象轨迹与 Actor–Critic 学习，再核对跨领域固定配方，以及“曾找到钻石”与单局成功率的区别。</span>
           </a>
         </div>
       </section>
