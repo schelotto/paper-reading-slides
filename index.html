@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#f7f8fc">
   <title>Agent 论文精读 · 从具体问题到原始证据</title>
-  <meta name="description" content="32 篇 Agent 与世界模型论文的中文交互式精读，按推理与行动、评测与可靠性、记忆系统、上下文工程、世界模型、社会模拟与角色扮演、推理服务与工程七组组织，新增 Cradle、MCP-Bench、Agent-as-a-Judge 与 SGLang。">
+  <meta name="description" content="33 篇 Agent 与世界模型论文的中文交互式精读，按推理与行动、评测与可靠性、记忆系统、上下文工程、世界模型、社会模拟与角色扮演、推理服务与工程七组组织，新增 Mem0、Cradle、MCP-Bench、Agent-as-a-Judge 与 SGLang。">
   <style>
 
     :root {
@@ -231,7 +231,7 @@
         <span><span class="brand-name">Agent Papers</span><span class="brand-caption">READ · THINK · UNDERSTAND</span></span>
       </a>
       <nav class="header-links" aria-label="页面导航">
-        <a href="#reading-collection">论文目录</a><a href="#reading-help">阅读指南</a><span class="header-count">32 篇中文精读</span>
+        <a href="#reading-collection">论文目录</a><a href="#reading-help">阅读指南</a><span class="header-count">33 篇中文精读</span>
       </nav>
     </header>
     <section class="hero" aria-labelledby="collection-title">
@@ -243,7 +243,7 @@
         <a class="hero-browse" href="#reading-collection">浏览全部论文 <span aria-hidden="true">↓</span></a>
       </div>
       <dl class="collection-stats" aria-label="论文集概览">
-        <div><dt>32</dt><dd>篇中文交互精读</dd></div>
+        <div><dt>33</dt><dd>篇中文交互精读</dd></div>
         <div><dt>07</dt><dd>组研究主题</dd></div>
         <div><dt class="stat-word">原文</dt><dd>图表与证据核查</dd></div>
       </dl>
@@ -255,7 +255,7 @@
       <nav class="topic-index" aria-label="按研究主题快速导航">
         <a class="topic-link" href="#topic-reasoning"><span class="topic-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 6h5v5H5Zm14 0h-5v5h5ZM9 19h6v-5H9ZM10 8h4m-7 3v5h2m8-5v5h-2"/></svg></span><span class="topic-total">09 篇</span><span class="topic-label">推理与行动</span><span class="topic-desc">规划 · 工具 · 协作</span></a>
         <a class="topic-link" href="#topic-evaluation"><span class="topic-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 8 3v6c0 4-5 8-8 9-3-1-8-5-8-9V6l8-3Z"/><path d="m8 12 3 3 5-6"/></svg></span><span class="topic-total">05 篇</span><span class="topic-label">评测与可靠性</span><span class="topic-desc">交互 · 约束 · 一致性</span></a>
-        <a class="topic-link" href="#topic-memory"><span class="topic-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 4 16 4 16 0V6M4 12v6c0 4 16 4 16 0v-6"/></svg></span><span class="topic-total">06 篇</span><span class="topic-label">记忆系统</span><span class="topic-desc">写入 · 检索 · 更新</span></a>
+        <a class="topic-link" href="#topic-memory"><span class="topic-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 4 16 4 16 0V6M4 12v6c0 4 16 4 16 0v-6"/></svg></span><span class="topic-total">07 篇</span><span class="topic-label">记忆系统</span><span class="topic-desc">写入 · 检索 · 更新</span></a>
         <a class="topic-link" href="#topic-context"><span class="topic-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 9h18M7 13h7m-7 3h10"/></svg></span><span class="topic-total">02 篇</span><span class="topic-label">上下文工程</span><span class="topic-desc">历史 · 窗口 · 经验</span></a>
         <a class="topic-link" href="#topic-world-models"><span class="topic-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 9 5v10l-9 5-9-5V7l9-5Zm0 10 9-5M12 12 3 7m9 5v10M7.5 4.5l9 5"/></svg></span><span class="topic-total">02 篇</span><span class="topic-label">世界模型</span><span class="topic-desc">预测 · 规划 · 生成</span></a>
         <a class="topic-link" href="#topic-social"><span class="topic-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20v-3a6 6 0 0 1 12 0v3M16 5a3 3 0 0 1 0 6m2 3a5 5 0 0 1 3 5v1"/></svg></span><span class="topic-total">07 篇</span><span class="topic-label">社会模拟与角色扮演</span><span class="topic-desc">角色 · 人格 · 互动</span></a>
@@ -467,9 +467,23 @@
         </div>
       </section>
       <section data-group="memory" aria-labelledby="topic-memory">
-        <header class="topic-header"><div><p class="topic-kicker">03 / MEMORY</p><h2 id="topic-memory">怎样存下经历，并在需要时找回？</h2></div><span class="topic-count">6 篇精读</span></header>
-        <p class="topic-intro">先看记忆如何组织与使用：HippoRAG 连接跨段证据，Zep 追踪事实的时间变化，A-MEM 维护新旧卡片的关联，ReasoningBank 从成败经历提炼可迁移策略。再用 LongMemEval 检验跨会话记忆，用 PersonaMem 检验动态用户画像能否支持贴合当下的回应，串起“存下什么、怎样找回、是否有用”。</p>
+        <header class="topic-header"><div><p class="topic-kicker">03 / MEMORY</p><h2 id="topic-memory">怎样存下经历，并在需要时找回？</h2></div><span class="topic-count">7 篇精读</span></header>
+        <p class="topic-intro">先看记忆如何组织与使用：Mem0 从新消息对增量提取事实并协调更新，HippoRAG 连接跨段证据，Zep 追踪事实的时间变化，A-MEM 维护新旧卡片的关联，ReasoningBank 从成败经历提炼可迁移策略。再用 LongMemEval 检验跨会话记忆，用 PersonaMem 检验动态用户画像能否支持贴合当下的回应，串起“存下什么、怎样找回、是否有用”。</p>
         <div class="paper-grid">
+          <a href="./03-memory-systems/mem0.html">
+            <div class="paper-visual" aria-hidden="true">
+              <svg viewBox="0 0 300 108">
+                <path class="v-paper" d="M26 21h42a8 8 0 0 1 8 8v28a8 8 0 0 1-8 8H49l-13 10V65H26a8 8 0 0 1-8-8V29a8 8 0 0 1 8-8Z"/><path d="M29 36h36m-36 12h24"/>
+                <path class="v-dim" d="M84 44h23m-6-5 6 5-6 5m81-5h23m-6-5 6 5-6 5"/>
+                <rect class="v-soft" x="115" y="16" width="66" height="25" rx="6"/><path d="M126 28h28m11-4v8m-4-4h8"/>
+                <rect class="v-paper" x="115" y="49" width="66" height="25" rx="6"/><path class="v-dim" d="M126 61h28"/><path d="m161 57 8 8m0-8-8 8"/>
+                <rect class="v-paper" x="220" y="21" width="58" height="53" rx="7"/><path d="M232 35h34m-34 12h22m-22 12 7 6 14-16"/>
+                <text x="47" y="102">新消息对</text><text x="148" y="102">提取与更新</text><text x="249" y="102">按需读回</text>
+              </svg>
+            </div>
+            <strong>R59 - Mem0</strong>
+            <span>跨会话时怎样只记有用事实，而不重读全史？从消息对增量提取候选，与相似旧记忆比对并执行增删改；再用图版本保留关系变化，对照 LOCOMO 上的质量、延迟与 token 账本。</span>
+          </a>
           <a href="./03-memory-systems/hipporag.html">
             <div class="paper-visual" aria-hidden="true">
               <svg viewBox="0 0 300 108">
