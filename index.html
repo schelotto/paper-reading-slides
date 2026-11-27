@@ -860,7 +860,7 @@
                 <text x="45" y="102">AI 偏好标注</text><text x="145" y="102">软偏好 / 直评</text><text x="246" y="102">RL 策略对齐</text>
               </svg>
             </div>
-            <strong>R31 - RLAIF vs. RLHF: Scaling Reinforcement Learning from Human Feedback with AI Feedback</strong>
+            <strong>R31 - RLAIF vs. RLHF</strong>
             <span>人工逐条标注偏好既贵又难扩量。用现成语言模型先写理由再输出 A/B 软偏好，经换序去偏后训练奖励模型或在线直接打分，在摘要与对话任务上追平甚至胜过 RLHF。</span>
           </a>
           <a href="./07-post-training-and-preference-alignment/self-instruct.html">
@@ -955,7 +955,7 @@
                 <text x="46" y="102">按长均分</text><text x="147" y="102">目标间隔 γ</text><text x="248" y="102">无参考对齐</text>
               </svg>
             </div>
-            <strong>R90 - SimPO: Simple Preference Optimization with a Reference-Free Reward</strong>
+            <strong>R90 - SimPO</strong>
             <span>DPO 依赖参考模型，训练奖励与生成似然排序可能失配。SimPO 直接用当前策略按长度平均的对数概率作隐式奖励并引入目标间隔 γ，省去参考模型、节省显存并提升指令遵循胜率。</span>
           </a>
           <a href="./07-post-training-and-preference-alignment/deepseek-r1.html">
@@ -969,7 +969,7 @@
                 <text x="48" y="102">组内采样</text><text x="147" y="102">规则奖励 · GRPO</text><text x="248" y="102">多阶段推理</text>
               </svg>
             </div>
-            <strong>R33 - DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning</strong>
+            <strong>R33 - DeepSeek-R1</strong>
             <span>不依赖人类标注推理步骤，先用 GRPO 与规则奖励在可核验任务上激发 R1-Zero 的自发长推理，再经两次冷启动 SFT 与两次 RL 兼顾可读性与通用偏好，并将能力蒸馏至小模型。</span>
           </a>
         </div>
